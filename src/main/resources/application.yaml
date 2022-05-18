@@ -1,0 +1,6 @@
+spring:
+    application:
+        name: ssi-verifier
+    mvc:
+        pathmatch:
+            matching-strategy: ant_path_matcher # required for the Swagger UI to work
