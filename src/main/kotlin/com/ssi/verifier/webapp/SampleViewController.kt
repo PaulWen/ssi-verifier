@@ -7,9 +7,10 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
+
 @Controller
 @Api(description = "Sample Operations", tags = ["sample"])
-@RequestMapping("/api/sampleview")
+@RequestMapping("/sampleview")
 class SampleViewController {
 
     @ApiOperation(value = "Returns a simple string")
@@ -18,4 +19,5 @@ class SampleViewController {
         model.addAttribute("test", "Hello, world!")
         return "sample"
     }
+
 }

@@ -10,6 +10,23 @@
 <section>
     <p>Your page content goes here</p>
 </section>
+<section>
+    <form action="#" th:action="@{/api/sampleview}" th:object="${student}" method="post">
+        <table border="1">
+            <tr>
+                <td><label th:text="#{msg.id}"/></td>
+                <td><input type="number" th:field="*{id}"/></td>
+            </tr>
+            <tr>
+                <td><label th:text="#{msg.name}"/></td>
+                <td><input type="text" th:field="*{name}"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Submit"/></td>
+            </tr>
+        </table>
+    </form>
+</section>
 <footer>
     <p>My custom footer</p>
     <p>Your custom footer here</p>
