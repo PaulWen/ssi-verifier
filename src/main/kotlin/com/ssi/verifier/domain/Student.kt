@@ -1,7 +1,7 @@
 package com.ssi.verifier.domain
 
 import org.hibernate.validator.constraints.Length
-import javax.validation.constraints.NotNull
+import javax.validation.constraints.NotBlank
 
 class Student(
     val studentId: Int,
@@ -11,9 +11,9 @@ class Student(
 
 class LastName {
 
-    @NotNull
+    @NotBlank
     @Length(min = 2, message = "Must be at least 2 characters long.")
-    var name: String? = null
+    var name: String = ""
 
     constructor()
 
@@ -22,7 +22,7 @@ class LastName {
     }
 
     override fun toString(): String {
-        return name as String
+        return name
     }
 
 }
