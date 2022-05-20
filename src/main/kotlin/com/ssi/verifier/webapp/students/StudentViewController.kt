@@ -36,18 +36,18 @@ class StudentController(
     }
 
     @PostMapping("/create")
-    fun addStudent(@Valid createStudentForm: CreateStudentRequest, result: BindingResult): String {
+    fun addStudent(@Valid createStudentRequest: CreateStudentRequest, result: BindingResult): String {
 
         if (result.hasErrors()) {
             return "students/new-student-form";
         }
 
         studentInteractor.createStudent(Student(
-            studentId = createStudentForm.studentId!!,
-            lastName = createStudentForm.lastName!!,
-            firstName = createStudentForm.firstName!!))
+            studentId = createStudentRequest.studentId!!,
+            lastName = createStudentRequest.lastName!!,
+            firstName = createStudentRequest.firstName!!))
 
-        return "redirect:" + createStudentForm.studentId
+        return "redirect:" + createStudentRequest.studentId
     }
 
 }
