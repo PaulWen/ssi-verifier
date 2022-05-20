@@ -15,11 +15,14 @@ class LastName {
     @Length(min = 2, message = "Must be at least 2 characters long.")
     var name: String? = null
 
-    constructor() {
-    }
+    constructor()
 
     constructor(name: String) {
         this.name = name
+    }
+
+    override fun toString(): String {
+        return name as String
     }
 
 }
