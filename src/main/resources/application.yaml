@@ -1,6 +1,16 @@
 spring:
-    application:
-        name: ssi-verifier
-    mvc:
-        pathmatch:
-            matching-strategy: ant_path_matcher # required for the Swagger UI to work
+  application:
+    name: ssi-verifier
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher # required for the Swagger UI to work
+
+keycloak:
+  auth-server-url: https://lissi-cloud-dev.westeurope.cloudapp.azure.com/auth
+  realm: lissi-cloud
+  resource: postman
+  public-client: true
+  securityConstraints:
+    - authRoles: [ "lissi_manager" ]
+      securityCollections:
+        - patterns: [ "/*" ]
