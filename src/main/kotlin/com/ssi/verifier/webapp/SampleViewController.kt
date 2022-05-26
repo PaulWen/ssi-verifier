@@ -21,6 +21,7 @@ class SampleViewController(
         val proofRequestTemplates = ssiVerifier.allProofRequestTemplates()
 
         model.addAttribute("test", proofRequestTemplates.joinToString("; "))
+        model.addAttribute("connectionlessProofRequest", ssiVerifier.newConnectionlessProofRequest(proofRequestTemplates.first().id))
         return "sample"
     }
 }

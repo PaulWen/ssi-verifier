@@ -1,5 +1,6 @@
 package com.ssi.verifier.infrastructure.services
 
+import com.ssi.verifier.domain.models.ConnectionlessProofRequest
 import com.ssi.verifier.domain.models.ProofRequestTemplate
 import com.ssi.verifier.domain.services.SsiVerifier
 import org.springframework.beans.factory.annotation.Qualifier
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
+import org.springframework.web.client.postForObject
 import java.util.*
 
 
@@ -24,8 +26,13 @@ class LissiAgentSsiVerifier(
         return rateResponse.body!!.map { template -> template.toDo(this) }
     }
 
-    override fun newConnectionlessProofRequest(proofRequestTemplateId: String): String {
-        TODO("Not yet implemented")
+    override fun newConnectionlessProofRequest(proofRequestTemplateId: String): ConnectionlessProofRequest {
+        val connectionlessProofRequestResponse = http.postForObject<ConnectionlessProofRequestResponse>(
+            url = "/presentation-proof/connectionless?proofTemplateId={proofTemplateId}",
+            uriVariables = mapOf("proofTemplateId" to proofRequestTemplateId)
+        )
+
+        return connectionlessProofRequestResponse.toDo()
     }
 
     internal fun loadImageDataUrlEncoded(imageUrl: String): String {
@@ -56,4 +63,17 @@ internal data class ProofRequestTemplateResponse(
         )
     }
 }
+
+internal data class ConnectionlessProofRequestResponse(
+    val exchangeId: String,
+    val url: String
+) {
+    fun toDo(): ConnectionlessProofRequest {
+        return ConnectionlessProofRequest(
+            exchangeId,
+            url
+        )
+    }
+}
+
 
