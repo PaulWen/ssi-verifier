@@ -1,5 +1,6 @@
 package com.ssi.verifier.webapp
 
+import com.ssi.verifier.domain.services.SsiVerifier
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.stereotype.Controller
@@ -11,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping
 @Controller
 @Api(description = "Sample Operations", tags = ["sample"])
 @RequestMapping("/sampleview")
-class SampleViewController {
-
+class SampleViewController(
+    private val ssiVerifier: SsiVerifier
+) {
     @ApiOperation(value = "Returns a simple string")
     @GetMapping("", produces = ["text/plain"])
     fun sample(model: Model): String {
-        model.addAttribute("test", "Hello, world!")
+        val proofRequestTemplates = ssiVerifier.allProofRequestTemplates()
+
+        model.addAttribute("test", proofRequestTemplates.joinToString("; "))
         return "sample"
     }
 }
