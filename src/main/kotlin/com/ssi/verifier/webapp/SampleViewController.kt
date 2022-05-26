@@ -19,5 +19,4 @@ class SampleViewController {
         model.addAttribute("test", "Hello, world!")
         return "sample"
     }
-
 }
