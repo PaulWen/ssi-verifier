@@ -14,6 +14,9 @@ keycloak:
     - authRoles: [ "lissi_manager" ]
       securityCollections:
         - patterns: [ "/*" ]
+    - authRoles: [ ]
+      securityCollections:
+        - patterns: [ "/api/acapy-webhook/topic/*" ]
 
 lissi-agent:
   url: https://lissi-cloud-dev.westeurope.cloudapp.azure.com/ctrl/api/v1.0

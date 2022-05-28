@@ -7,7 +7,7 @@ import java.io.ByteArrayOutputStream
 import java.util.*
 
 
-class ConnectionlessProofRequest(
+class ConnectionlessProofRequestDo(
     val exchangeId: String,
     val url: String
 ) {

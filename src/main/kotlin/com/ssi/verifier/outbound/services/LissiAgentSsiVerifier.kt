@@ -1,8 +1,8 @@
 package com.ssi.verifier.outbound.services
 
-import com.ssi.verifier.domain.models.ConnectionlessProofRequest
-import com.ssi.verifier.domain.models.ProofRequestTemplate
-import com.ssi.verifier.domain.services.SsiVerifier
+import com.ssi.verifier.domain.models.ConnectionlessProofRequestDo
+import com.ssi.verifier.domain.models.ProofRequestTemplateDo
+import com.ssi.verifier.domain.services.SsiVerifierService
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpMethod
@@ -17,16 +17,16 @@ import java.util.*
 @Service
 class LissiAgentSsiVerifier(
     @Qualifier("LissiAgent") private val http: RestTemplate
-) : SsiVerifier {
+) : SsiVerifierService {
 
-    override fun allProofRequestTemplates(): List<ProofRequestTemplate> {
+    override fun allProofRequestTemplates(): List<ProofRequestTemplateDo> {
         val rateResponse: ResponseEntity<List<ProofRequestTemplateResponse>> = http.exchange("/proof-templates",
             HttpMethod.GET, null, object : ParameterizedTypeReference<List<ProofRequestTemplateResponse>>() {})
 
         return rateResponse.body!!.map { template -> template.toDo(this) }
     }
 
-    override fun newConnectionlessProofRequest(proofRequestTemplateId: String): ConnectionlessProofRequest {
+    override fun newConnectionlessProofRequest(proofRequestTemplateId: String): ConnectionlessProofRequestDo {
         val connectionlessProofRequestResponse = http.postForObject<ConnectionlessProofRequestResponse>(
             url = "/presentation-proof/connectionless?proofTemplateId={proofTemplateId}",
             uriVariables = mapOf("proofTemplateId" to proofRequestTemplateId)
@@ -48,16 +48,16 @@ internal data class ProofRequestTemplateResponse(
     val name: String,
     val imageUrl: String?
 ) {
-    fun toDo(lissiAgentSsiVerifier: LissiAgentSsiVerifier): ProofRequestTemplate {
+    fun toDo(lissiAgentSsiVerifier: LissiAgentSsiVerifier): ProofRequestTemplateDo {
         if (imageUrl != null) {
-            return ProofRequestTemplate(
+            return ProofRequestTemplateDo(
                 templateId,
                 name,
                 lissiAgentSsiVerifier.loadImageDataUrlEncoded(imageUrl)
             )
         }
 
-        return ProofRequestTemplate(
+        return ProofRequestTemplateDo(
             templateId,
             name
         )
@@ -68,8 +68,8 @@ internal data class ConnectionlessProofRequestResponse(
     val exchangeId: String,
     val url: String
 ) {
-    fun toDo(): ConnectionlessProofRequest {
-        return ConnectionlessProofRequest(
+    fun toDo(): ConnectionlessProofRequestDo {
+        return ConnectionlessProofRequestDo(
             exchangeId,
             url
         )

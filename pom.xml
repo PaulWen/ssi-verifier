@@ -87,6 +87,11 @@
             <artifactId>javase</artifactId>
             <version>3.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>network.idu.acapy</groupId>
+            <artifactId>aries-client-python</artifactId>
+            <version>0.7.19</version>
+        </dependency>
 
 
         <dependency>

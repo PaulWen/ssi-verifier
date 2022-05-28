@@ -9,3 +9,5 @@ A simple SSI verifier app that integrates with the Lissi Agent.
 - ensure that your application is rebuild after saving (e.g. using Save Actions
   for IntelliJ) to ensure that changes take effect immediately without requiring
   a manual restart of the application
+- add the webhook URL when starting the
+  AcaPy `--webhook-url 'http://host.docker.internal:8888/api/acapy-webhook' \`
