@@ -1,16 +1,23 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <title>Spring with Spring Boot, Spring MVC, and Kotlin</title>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<html lang="">
+<head>
+    <title>Sample View</title>
 </head>
 <body>
-<h1>Hello World!</h1>
-<h2>This is my index page</h2>
-
-<a href="students/create">Add New Student</a>
-
-<a href="students">List Student</a>
-
+<header>
+    <h1>New dialect example</h1>
+    <h1 th:text="${test}"></h1>
+</header>
+<section>
+    <p>Connectionless Proof Request</p>
+    <p th:text="${connectionlessProofRequest.exchangeId}"></p>
+    <p th:text="${connectionlessProofRequest.url}"></p>
+    <img th:src="${connectionlessProofRequest.qrCodeDataUrlEncoded}"></img>
+</section>
+<footer>
+    <p>My custom footer</p>
+    <p>Your custom footer here</p>
+</footer>
 </body>
 </html>
+

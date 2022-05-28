@@ -1,4 +1,4 @@
-package com.ssi.verifier.webapi
+package com.ssi.verifier.inbound.acapy
 
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation

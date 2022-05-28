@@ -1,4 +1,4 @@
-package com.ssi.verifier.infrastructure.services
+package com.ssi.verifier.outbound.services
 
 import com.ssi.verifier.domain.models.ConnectionlessProofRequest
 import com.ssi.verifier.domain.models.ProofRequestTemplate
