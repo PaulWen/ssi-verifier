@@ -16,7 +16,7 @@ keycloak:
         - patterns: [ "/*" ]
     - authRoles: [ ]
       securityCollections:
-        - patterns: [ "/api/acapy-webhook/topic/*" ]
+        - patterns: [ "/api/acapy-webhook/topic/*", "/stomp", "/stomp/*" ]
 
 lissi-agent:
   url: https://lissi-cloud-dev.westeurope.cloudapp.azure.com/ctrl/api/v1.0
