@@ -16,7 +16,7 @@ class IndexController(
         val proofRequestTemplates = proofExchangeInteractor.allProofRequestTemplates()
 
         model.addAttribute("test", proofRequestTemplates.joinToString("; "))
-        model.addAttribute("connectionlessProofRequest", proofExchangeInteractor.newConnectionlessProofRequest(proofRequestTemplates.get(1).id))
+        model.addAttribute("connectionlessProofRequest", proofExchangeInteractor.newConnectionlessProofRequest(proofRequestTemplates.get(0).id))
 
         return "index"
     }

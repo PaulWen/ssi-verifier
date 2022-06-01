@@ -1,23 +1,53 @@
 <!DOCTYPE html>
 <html lang="">
 <head>
-    <title>Sample View</title>
+    <title>SSI Verifier</title>
+    <script src="https://unpkg.com/@hotwired/turbo@7.0.0-beta.1/dist/turbo.es5-umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            connectToWebSocket();
+        };
+
+        function connectToWebSocket() {
+            var url = "ws://" + document.location.host + "/stomp";
+            var client = Stomp.client(url);
+
+            var headers = {};
+            client.connect(headers, function () {
+                console.log("Connection is made")
+
+                client.subscribe("/proof", function (message) {
+                    // called when the client receives a STOMP message from the server
+                    if (message.body) {
+                        alert("got message with body " + message.body)
+                    } else {
+                        alert("got empty message");
+                    }
+                });
+            });
+        }
+    </script>
 </head>
 <body>
 <header>
-    <h1>New dialect example</h1>
-    <h1 th:text="${test}"></h1>
+    <h1>Connectionless Proof Request</h1>
 </header>
 <section>
-    <p>Connectionless Proof Request</p>
+    <h2>List of all Proof Templates</h2>
+    <p th:text="${test}"></p>
+</section>
+
+<section>
+    <h2>Connectionless Proof Request</h2>
     <p th:text="${connectionlessProofRequest.exchangeId}"></p>
     <p th:text="${connectionlessProofRequest.url}"></p>
     <img th:src="${connectionlessProofRequest.qrCodeDataUrlEncoded}"></img>
 </section>
-<footer>
-    <p>My custom footer</p>
-    <p>Your custom footer here</p>
-</footer>
+<section>
+    <h2>Updates</h2>
+    <div id="proof-exchange-update"></div>
+</section>
 </body>
 </html>
 

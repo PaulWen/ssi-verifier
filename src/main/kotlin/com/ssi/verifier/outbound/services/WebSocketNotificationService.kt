@@ -11,6 +11,20 @@ class WebSocketNotificationService(
 ) : NotificationService {
     override fun proofExchangeUpdate(proofExchangeRecordDo: ProofExchangeRecordDo) {
         println("Received Proof Exchange Update!")
-        wsService.convertAndSend("/proof", "${proofExchangeRecordDo.id}, ${proofExchangeRecordDo.state}, ${proofExchangeRecordDo.isValid}")
+
+        val htmlUpdate = """
+            <turbo - stream action ="append" target = "proof-exchange-update">
+                <template >
+                    <div>
+                        ID: ${proofExchangeRecordDo.id}
+                        State: ${proofExchangeRecordDo.state}
+                        Verified: ${proofExchangeRecordDo.isVerified}
+                        Valid: ${proofExchangeRecordDo.isValid}
+                    </div>
+                </template>
+            </turbo-stream>
+        """
+
+        wsService.convertAndSend("/proof", htmlUpdate)
     }
 }
