@@ -10,11 +10,9 @@ class WebSocketNotificationService(
     private val wsService: SimpMessagingTemplate,
 ) : NotificationService {
     override fun proofExchangeUpdate(proofExchangeRecordDo: ProofExchangeRecordDo) {
-        println("Received Proof Exchange Update!")
-
         val htmlUpdate = """
-            <turbo - stream action ="append" target = "proof-exchange-update">
-                <template >
+            <turbo-stream action="append" target="proof-exchange-update">
+                <template>
                     <div>
                         ID: ${proofExchangeRecordDo.id}
                         State: ${proofExchangeRecordDo.state}

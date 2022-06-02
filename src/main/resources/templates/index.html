@@ -2,32 +2,7 @@
 <html lang="">
 <head>
     <title>SSI Verifier</title>
-    <script src="https://unpkg.com/@hotwired/turbo@7.0.0-beta.1/dist/turbo.es5-umd.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-    <script type="text/javascript">
-        window.onload = function () {
-            connectToWebSocket();
-        };
-
-        function connectToWebSocket() {
-            var url = "ws://" + document.location.host + "/stomp";
-            var client = Stomp.client(url);
-
-            var headers = {};
-            client.connect(headers, function () {
-                console.log("Connection is made")
-
-                client.subscribe("/proof", function (message) {
-                    // called when the client receives a STOMP message from the server
-                    if (message.body) {
-                        alert("got message with body " + message.body)
-                    } else {
-                        alert("got empty message");
-                    }
-                });
-            });
-        }
-    </script>
+    <script src="js/TurboStreamConnection.js" type="module" async defer></script>
 </head>
 <body>
 <header>
@@ -47,6 +22,7 @@
 <section>
     <h2>Updates</h2>
     <div id="proof-exchange-update"></div>
+    <turbo-stream-connection src="/proof" debug="false"></turbo-stream-connection>
 </section>
 </body>
 </html>
