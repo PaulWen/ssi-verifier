@@ -1,4 +1,7 @@
-import {connectStreamSource, disconnectStreamSource} from "/js/Turbo.js";
+import {
+    connectStreamSource,
+    disconnectStreamSource
+} from "https://unpkg.com/@hotwired/turbo@7.1.0/dist/turbo.es2017-esm.js";
 import "https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js";
 
 class TurboStreamConnection extends HTMLElement {
