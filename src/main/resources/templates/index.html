@@ -22,7 +22,8 @@
 <section>
     <h2>Updates</h2>
     <div id="proof-exchange-update"></div>
-    <turbo-stream-connection src="/proof" debug="false"></turbo-stream-connection>
+    <turbo-stream-connection th:src="'/proof/' + ${connectionlessProofRequest.exchangeId}"
+                             debug="false"></turbo-stream-connection>
 </section>
 </body>
 </html>

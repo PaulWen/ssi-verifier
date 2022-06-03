@@ -1,0 +1,14 @@
+<turbo-stream action="append" target="proof-exchange-update">
+    <template>
+        <div>
+            ID:
+            <div th:text="${proofExchangeRecord.id}"></div>
+            State:
+            <div th:text="${proofExchangeRecord.state}"></div>
+            Verified:
+            <div th:text="${proofExchangeRecord.isVerified}"></div>
+            Valid:
+            <div th:text="${proofExchangeRecord.isValid}"></div>
+        </div>
+    </template>
+</turbo-stream>

@@ -3,6 +3,10 @@ server:
 spring:
   thymeleaf:
     cache: false
+  web:
+    resources:
+      chain:
+        cache: false
 
 keycloak:
   auth-server-url: http://keycloak.lissi-cloud.localhost:8080/auth
