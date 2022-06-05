@@ -54,24 +54,16 @@
     </div>
 </nav>
 <!-- Navbar -->
-<main class="my-5 mx-2 container">
-
+<main class="my-5 mx-2">
+    <turbo-stream-connection th:src="'/proof/' + ${connectionlessProofRequest.exchangeId}"
+                             debug="false"></turbo-stream-connection>
     <div class="container">
-        <h2>Select a Proof Template</h2>
-        <div class="row my-2">
-            <div class="col-md-4 col-xl-3 col-lg-4 mb-3 col-sm-5"
-                 th:each="proofRequestTemplate : ${proofRequestTemplates}">
-                <a th:href="'/proof-request/' + ${proofRequestTemplate.id}" class="text-dark">
-                    <p class="fw-bold mb-1" th:text="${proofRequestTemplate.name}"></p>
-                    <img class="card"
-                         alt=""
-                         style="width: 200px; height: 128px"
-                         th:src="${proofRequestTemplate.imageDataUrl}"/>
-                </a>
-            </div>
+
+        <h2 th:text="${proofRequestTemplateName}">Connectionless Proof Request</h2>
+        <div id="content">
+            <img th:src="${connectionlessProofRequest.qrCodeDataUrlEncoded}" style="width: 400px"></img>
         </div>
     </div>
-
 </main>
 
 </body>

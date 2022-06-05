@@ -26,6 +26,12 @@ class LissiAgentSsiVerifier(
         return rateResponse.body!!.map { template -> template.toDo(this) }
     }
 
+    override fun proofRequestTemplateById(id: String): ProofRequestTemplateDo {
+        val proofRequestTemplate: ProofRequestTemplateResponse = http.getForObject("/proof-templates/$id", ProofRequestTemplateResponse::class)
+
+        return proofRequestTemplate.toDo(this)
+    }
+
     override fun newConnectionlessProofRequest(proofRequestTemplateId: String): ConnectionlessProofRequestDo {
         val connectionlessProofRequestResponse = http.postForObject<ConnectionlessProofRequestResponse>(
             url = "/presentation-proof/connectionless?proofTemplateId={proofTemplateId}",

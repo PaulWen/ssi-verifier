@@ -17,6 +17,10 @@ class ProofExchangeInteractor(
         return ssiVerifier.allProofRequestTemplates()
     }
 
+    fun proofRequestTemplateById(id: String): ProofRequestTemplateDo {
+        return ssiVerifier.proofRequestTemplateById(id)
+    }
+
     fun newConnectionlessProofRequest(proofRequestTemplateId: String): ConnectionlessProofRequestDo {
         return ssiVerifier.newConnectionlessProofRequest(proofRequestTemplateId)
     }
