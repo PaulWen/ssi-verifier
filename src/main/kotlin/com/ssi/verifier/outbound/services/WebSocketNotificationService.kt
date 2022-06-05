@@ -15,7 +15,7 @@ class WebSocketNotificationService(
     override fun validProofExchangeUpdate(verifiedProof: VerifiedProofDo) {
         val context = Context()
         context.setVariable("verifiedProof", verifiedProof)
-        val htmlUpdate = templateEngine.process("valid-proof-exchange-result", context)
+        val htmlUpdate = templateEngine.process("proof-request/valid-proof-exchange-result", context)
 
         wsService.convertAndSend("/proof/${verifiedProof.id}", htmlUpdate)
     }
@@ -23,7 +23,7 @@ class WebSocketNotificationService(
     override fun invalidProofExchangeUpdate(verifiedProof: VerifiedProofDo) {
         val context = Context()
 
-        val htmlUpdate = templateEngine.process("invalid-proof-exchange-result", context)
+        val htmlUpdate = templateEngine.process("proof-request/invalid-proof-exchange-result", context)
         wsService.convertAndSend("/proof/${verifiedProof.id}", htmlUpdate)
     }
 

@@ -24,6 +24,6 @@ class ProofRequestController(
         model.addAttribute("proofRequestTemplateName", proofRequestTemplate.name)
         model.addAttribute("connectionlessProofRequest", connectionlessProofRequest)
 
-        return "connectionless-proof-request"
+        return "proof-request/connectionless-proof-request"
     }
 }
