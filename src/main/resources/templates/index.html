@@ -3,6 +3,8 @@
 <head>
     <title>SSI Verifier</title>
     <script src="js/TurboStreamConnection.js" type="module" async defer></script>
+    <turbo-stream-connection th:src="'/proof/' + ${connectionlessProofRequest.exchangeId}"
+                             debug="false"></turbo-stream-connection>
 </head>
 <body>
 <header>
@@ -10,17 +12,22 @@
 </header>
 <section>
     <h2>List of all Proof Templates</h2>
-    <p th:text="${test}"></p>
+    <table>
+        <tr th:each="proofRequestTemplate : ${proofRequestTemplates}">
+            <td>
+                <img th:src="${proofRequestTemplate.imageDataUrl}" style="width: 100px"></img>
+            </td>
+            <td th:text="${proofRequestTemplate.name}"></td>
+        </tr>
+    </table>
 </section>
 
-<section id="content">
+<section>
     <h2>Connectionless Proof Request</h2>
-    <p th:text="${connectionlessProofRequest.exchangeId}"></p>
-    <p th:text="${connectionlessProofRequest.url}"></p>
-    <img th:src="${connectionlessProofRequest.qrCodeDataUrlEncoded}"></img>
+    <div id="content">
+        <img th:src="${connectionlessProofRequest.qrCodeDataUrlEncoded}" style="width: 400px"></img>
+    </div>
 </section>
-<turbo-stream-connection th:src="'/proof/' + ${connectionlessProofRequest.exchangeId}"
-                         debug="false"></turbo-stream-connection>
 </body>
 </html>
 

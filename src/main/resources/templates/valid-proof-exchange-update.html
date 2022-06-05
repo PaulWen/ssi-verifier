@@ -63,24 +63,25 @@
         </svg>
 
         <div>
-            ID:
-            <div th:text="${verifiedProof.id}"></div>
-            Valid:
-            <div th:textb="${verifiedProof.isValid}"></div>
-            Credential-Attributes:
-            <table>
-                <tr th:each="credentialAttribute : ${verifiedProof.presentation.credentialAttributes}">
-                    <td th:text="${credentialAttribute.key}">key</td>
-                    <td th:text="${credentialAttribute.value}">value</td>
-                </tr>
-            </table>
-            Self-Attested-Attributes:
-            <table>
-                <tr th:each="selfAttestedAttribute : ${verifiedProof.presentation.selfAttestedAttributes}">
-                    <td th:text="${selfAttestedAttribute.key}">key</td>
-                    <td th:text="${selfAttestedAttribute.value}">value</td>
-                </tr>
-            </table>
+            <div th:if="${!verifiedProof.presentation.credentialAttributes.isEmpty()}">
+                <h4>Credential-Attributes</h4>
+                <table>
+                    <tr th:each="credentialAttribute : ${verifiedProof.presentation.credentialAttributes}">
+                        <td th:text="${credentialAttribute.key}">key</td>
+                        <td th:text="${credentialAttribute.value}">value</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div th:if="${!verifiedProof.presentation.selfAttestedAttributes.isEmpty()}">
+                <h4>Self-Attested-Attributes</h4>
+                <table>
+                    <tr th:each="selfAttestedAttribute : ${verifiedProof.presentation.selfAttestedAttributes}">
+                        <td th:text="${selfAttestedAttribute.key}">key</td>
+                        <td th:text="${selfAttestedAttribute.value}">value</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </template>
 </turbo-stream>

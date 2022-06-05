@@ -27,12 +27,12 @@ A simple SSI verifier app that integrates with the Lissi Agent.
 ## Next Steps
 
 - make everything look nice and be responsive using a UI Library
-
 - introduce a proof template overview page where the client can choose the proof
   template from he wants to request connectionless
-- show images to each proof template
 
 - dynamically connect to any Lissi Agent instance by providing the domain of the
   Lissi Agent
+- integrate an URL shortener
 
-- render data URL claim values as links 
+- render data URL claim values as links
+
