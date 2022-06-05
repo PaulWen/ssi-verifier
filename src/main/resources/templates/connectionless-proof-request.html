@@ -33,6 +33,14 @@
     .navbar {
         background-color: #0F2A47 !important;
     }
+
+    .btn {
+        background-color: #0F2A47 !important;
+    }
+
+    body {
+        background-color: #FAFAFA !important;
+    }
 </style>
 
 <!-- Navbar -->
@@ -58,11 +66,16 @@
     <turbo-stream-connection th:src="'/proof/' + ${connectionlessProofRequest.exchangeId}"
                              debug="false"></turbo-stream-connection>
     <div class="container">
-
         <h2 th:text="${proofRequestTemplateName}">Connectionless Proof Request</h2>
         <div id="content">
-            <img th:src="${connectionlessProofRequest.qrCodeDataUrlEncoded}" style="width: 400px"></img>
+            <img th:src="${connectionlessProofRequest.qrCodeDataUrlEncoded}"
+                 style="width: 400px; margin: 10px auto; display: block"></img>
         </div>
+    </div>
+
+    <div class="container my-5 px-3 d-grid gap-3 col-10 mx-auto">
+        <a class="btn btn-primary" href="javascript:window.location.href=window.location.href">New QR Code</a>
+        <a class="btn btn-primary px-3" href="/">Cancel</a>
     </div>
 </main>
 

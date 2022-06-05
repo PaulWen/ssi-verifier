@@ -2,7 +2,7 @@
     <template>
         <style>
             :root {
-                --scale: 5;
+                --scale: 2;
             }
 
             .checkmark__circle {
@@ -23,7 +23,7 @@
                 stroke-width: 2;
                 stroke: #fff;
                 stroke-miterlimit: 10;
-                margin: 10% auto;
+                margin: 4% auto;
                 box-shadow: inset 0px 0px 0px #7ac142;
                 animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
             }
@@ -62,23 +62,23 @@
             <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
         </svg>
 
-        <div>
-            <div th:if="${!verifiedProof.presentation.credentialAttributes.isEmpty()}">
-                <h4>Credential-Attributes</h4>
-                <table>
+        <div class="card px-3 py-3 col-10 mx-auto">
+            <div class="my-2" th:if="${!verifiedProof.presentation.credentialAttributes.isEmpty()}">
+                <h4>Credential Attributes</h4>
+                <table class="mx-3 my-3">
                     <tr th:each="credentialAttribute : ${verifiedProof.presentation.credentialAttributes}">
-                        <td th:text="${credentialAttribute.key}">key</td>
-                        <td th:text="${credentialAttribute.value}">value</td>
+                        <td><strong th:text="${credentialAttribute.key}">keyasdfasdf</strong></td>
+                        <td class="px-4" th:text="${credentialAttribute.value}">value</td>
                     </tr>
                 </table>
             </div>
 
-            <div th:if="${!verifiedProof.presentation.selfAttestedAttributes.isEmpty()}">
-                <h4>Self-Attested-Attributes</h4>
-                <table>
+            <div class="my-2" th:if="${!verifiedProof.presentation.selfAttestedAttributes.isEmpty()}">
+                <h4>Self Attested Attributes</h4>
+                <table class="mx-3 my-3">
                     <tr th:each="selfAttestedAttribute : ${verifiedProof.presentation.selfAttestedAttributes}">
-                        <td th:text="${selfAttestedAttribute.key}">key</td>
-                        <td th:text="${selfAttestedAttribute.value}">value</td>
+                        <td><strong th:text="${selfAttestedAttribute.key}">key</strong></td>
+                        <td class="px-4" th:text="${selfAttestedAttribute.value}">value</td>
                     </tr>
                 </table>
             </div>
