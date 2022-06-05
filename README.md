@@ -26,7 +26,6 @@ A simple SSI verifier app that integrates with the Lissi Agent.
 
 ## Next Steps
 
-- replace the QR Code with the result
 - make everything look nice and be responsive using a UI Library
 
 - introduce a proof template overview page where the client can choose the proof
