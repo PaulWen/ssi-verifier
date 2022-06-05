@@ -1,7 +1,8 @@
 package com.ssi.verifier.domain.services
 
-import com.ssi.verifier.domain.models.ProofExchangeRecordDo
+import com.ssi.verifier.domain.models.VerifiedProofDo
 
 interface NotificationService {
-    fun proofExchangeUpdate(proofExchangeRecordDo: ProofExchangeRecordDo)
+    fun validProofExchangeUpdate(verifiedProof: VerifiedProofDo)
+    fun invalidProofExchangeUpdate(verifiedProof: VerifiedProofDo)
 }

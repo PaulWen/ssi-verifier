@@ -1,0 +1,24 @@
+<turbo-stream action="append" target="proof-exchange-update">
+    <template>
+        <div>
+            ID:
+            <div th:text="${verifiedProof.id}"></div>
+            Valid:
+            <div th:text="${verifiedProof.isValid}"></div>
+            Credential-Attributes:
+            <table>
+                <tr th:each="credentialAttribute : ${verifiedProof.presentation.credentialAttributes}">
+                    <td th:text="${credentialAttribute.key}">key</td>
+                    <td th:text="${credentialAttribute.value}">value</td>
+                </tr>
+            </table>
+            Self-Attested-Attributes:
+            <table>
+                <tr th:each="selfAttestedAttribute : ${verifiedProof.presentation.selfAttestedAttributes}">
+                    <td th:text="${selfAttestedAttribute.key}">key</td>
+                    <td th:text="${selfAttestedAttribute.value}">value</td>
+                </tr>
+            </table>
+        </div>
+    </template>
+</turbo-stream>

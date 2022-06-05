@@ -1,8 +1,8 @@
 package com.ssi.verifier.application
 
 import com.ssi.verifier.domain.models.ConnectionlessProofRequestDo
-import com.ssi.verifier.domain.models.ProofExchangeRecordDo
 import com.ssi.verifier.domain.models.ProofRequestTemplateDo
+import com.ssi.verifier.domain.models.VerifiedProofDo
 import com.ssi.verifier.domain.services.NotificationService
 import com.ssi.verifier.domain.services.SsiVerifierService
 import org.springframework.stereotype.Service
@@ -21,7 +21,11 @@ class ProofExchangeInteractor(
         return ssiVerifier.newConnectionlessProofRequest(proofRequestTemplateId)
     }
 
-    fun proofExchangeUpdate(proofExchangeRecordDo: ProofExchangeRecordDo) {
-        notificationService.proofExchangeUpdate(proofExchangeRecordDo)
+    fun verifiedProof(proofExchangeRecordDo: VerifiedProofDo) {
+        if (!proofExchangeRecordDo.isValid) {
+            notificationService.invalidProofExchangeUpdate(proofExchangeRecordDo)
+        }
+
+        notificationService.validProofExchangeUpdate(proofExchangeRecordDo)
     }
 }
