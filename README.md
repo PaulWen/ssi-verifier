@@ -12,6 +12,20 @@ A simple SSI verifier app that integrates with the Lissi Agent.
 - add the webhook URL when starting the
   AcaPy `--webhook-url 'http://host.docker.internal:8888/api/acapy-webhook' \`
 
+## Build and Run Docker Container
+
+### Build Docker Container
+
+```
+docker build -t ssi-verifier . 
+```
+
+### Run Docker Container
+
+```
+docker run -p 8888:8080 --name ssi-verifier ssi-verifier
+```
+
 ## Technical Debt
 
 - AcaPy Webhook Endpoint muss geschützt werden, da ein Angreifer ansonsten AcaPy
@@ -24,7 +38,6 @@ A simple SSI verifier app that integrates with the Lissi Agent.
 
 ## Next Steps
 
-- create a Dockerfile to build Docker images
 - create a Git Pipeline to build and publish the Docker Image
 - Create a Helm Chart to deploy the SSI Verifier service
 
