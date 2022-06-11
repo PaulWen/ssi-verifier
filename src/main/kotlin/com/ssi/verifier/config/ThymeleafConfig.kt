@@ -1,5 +1,6 @@
 package com.ssi.verifier.config
 
+import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Description
 import org.thymeleaf.spring5.SpringTemplateEngine
@@ -23,15 +24,16 @@ class ThymeleafConfig {
     @Description("Thymeleaf Template Engine")
     fun templateEngine(templateResolver: ServletContextTemplateResolver): SpringTemplateEngine {
         val templateEngine = SpringTemplateEngine()
+        templateEngine.addDialect(LayoutDialect())
         templateEngine.setTemplateResolver(templateResolver)
         return templateEngine
     }
 
     @Bean
     @Description("Thymeleaf View Resolver")
-    fun viewResolver(templateEingine: SpringTemplateEngine): ThymeleafViewResolver? {
+    fun viewResolver(templateEngine: SpringTemplateEngine): ThymeleafViewResolver? {
         val viewResolver = ThymeleafViewResolver()
-        viewResolver.templateEngine = templateEingine
+        viewResolver.templateEngine = templateEngine
         viewResolver.order = 1
         return viewResolver
     }

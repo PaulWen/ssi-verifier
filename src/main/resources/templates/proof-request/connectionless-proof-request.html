@@ -1,71 +1,13 @@
 <!DOCTYPE html>
-<html lang="">
-<head>
-    <title>SSI Verifier</title>
-
-    <!-- Font Awesome -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-            rel="stylesheet"
-    />
-    <!-- Google Fonts -->
-    <link
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            rel="stylesheet"
-    />
-    <!-- MDB -->
-    <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.css"
-            rel="stylesheet"
-    />
-    <script
-            type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.1.0/mdb.min.js"
-    ></script>
-
-    <!-- Hotwire / Turbo -->
-    <script src="/js/TurboStreamConnection.js" type="module" async defer></script>
-
-</head>
+<html lang=""
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}"
+>
 <body>
-
-<style>
-    .navbar {
-        background-color: #0F2A47 !important;
-    }
-
-    .btn {
-        background-color: #0F2A47 !important;
-    }
-
-    body {
-        background-color: #FAFAFA !important;
-    }
-</style>
-
-<!-- Navbar -->
-<nav class="navbar navbar-dark sticky-top">
-    <div class="container-fluid">
-        <!-- Navbar brand -->
-        <div class="navbar-brand">
-            <a class="text-white" href="/">
-                SSI Verifier
-            </a>
-        </div>
-        <ul class="navbar-nav d-flex flex-row">
-            <li class="nav-item me-3 me-lg-0">
-                <a class="nav-link" href="/logout">
-                    <i class="fa-solid fa-arrow-right-from-bracket" style="color: white"></i>
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<!-- Navbar -->
-
-<main class="my-5 mx-2">
+<main class="my-5 mx-2" layout:fragment="content">
     <turbo-stream-connection th:src="'/proof/' + ${connectionlessProofRequest.exchangeId}"
                              debug="false"></turbo-stream-connection>
+
     <div class="container">
         <h2 th:text="${proofRequestTemplateName}">Connectionless Proof Request</h2>
         <div id="content">
@@ -79,7 +21,6 @@
         <a class="btn btn-primary px-3" href="/">Cancel</a>
     </div>
 </main>
-
 </body>
 </html>
 
