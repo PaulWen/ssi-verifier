@@ -54,7 +54,7 @@
         </div>
         <ul class="navbar-nav d-flex flex-row">
             <li class="nav-item me-3 me-lg-0">
-                <a class="nav-link" href="">
+                <a class="nav-link" href="/logout">
                     <i class="fa-solid fa-arrow-right-from-bracket" style="color: white"></i>
                 </a>
             </li>
@@ -66,7 +66,10 @@
 
     <div class="container">
         <h2>Select a Proof Template</h2>
-        <div class="row my-2 px-3">
+        <div class="row my-2 px-3" th:if="${proofRequestTemplates.isEmpty()}">
+            No proof templates available. Please create proof templates ...
+        </div>
+        <div class="row my-2 px-3" th:if="${!proofRequestTemplates.isEmpty()}">
             <div class="col-md-4 col-xl-3 col-lg-4 mb-3 col-sm-5"
                  th:each="proofRequestTemplate : ${proofRequestTemplates}">
                 <a th:href="'/proof-request/' + ${proofRequestTemplate.id}" class="text-dark">

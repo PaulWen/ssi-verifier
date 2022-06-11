@@ -24,10 +24,12 @@ A simple SSI verifier app that integrates with the Lissi Agent.
 
 ## Next Steps
 
-- dynamically connect to any Lissi Agent instance by providing the domain of the
-  Lissi Agent
-- implement the Logout button
-- integrate an URL shortener
+- use templating to not repeat the nav bar and header configuration across every
+  page (e.g. Thymeleafe Templating or Turbo Frames)
+
+- create a Dockerfile to build Docker images
+- create a Git Pipeline to build and publish the Docker Image
+- Create a Helm Chart to deploy the SSI Verifier service
 
 - store proof request results to an in-memory database
 - clean up the database every 15 minutes and all database entries expire after
@@ -41,5 +43,15 @@ A simple SSI verifier app that integrates with the Lissi Agent.
       template is requested twice and the green tick is still cached
 - show a refresh button below the QR Code
 
+- integrate an URL shortener
+
 - render data URL claim values as links
 
+## Out of Scope
+
+- dynamically connect to any Lissi Agent instance by providing the domain of the
+  Lissi Agent
+    - comes along with various security concerns as the same verifier instance
+      suddenly handels data from many SSI agents
+    - to ensure proper data isolation a new SSI verifier instance should be
+      deployed for each Lissi Agent instance
