@@ -24,9 +24,6 @@ A simple SSI verifier app that integrates with the Lissi Agent.
 
 ## Next Steps
 
-- use templating to not repeat the nav bar and header configuration across every
-  page (e.g. Thymeleafe Templating or Turbo Frames)
-
 - create a Dockerfile to build Docker images
 - create a Git Pipeline to build and publish the Docker Image
 - Create a Helm Chart to deploy the SSI Verifier service
