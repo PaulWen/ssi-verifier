@@ -65,13 +65,16 @@ is required:
 ## Technical Debt
 
 - WebSockets mit authorization Header absichern, damit nicht jeder subscriben
-  kann
+  kann -> not super critical as clients need to subscribe to changes for
+  particular proof exchange IDs and those are hard to guess
 - Socket stream html element sollte nur eine Connection aufbauen und dann zu
   vielen topics subscriben anstatt jedes Mal eine neue Connection aufzubauen
 
 ## Next Steps
 
-- Create a Helm Chart to deploy the SSI Verifier service
+- optimize the UI for mobile devices
+- introduce a default error page
+- integrate an URL shortener
 
 - store proof request results to an in-memory database
 - clean up the database every 15 minutes and all database entries expire after
@@ -84,8 +87,6 @@ is required:
     - ensures that no green tick is rendered temporarily when the same proof
       template is requested twice and the green tick is still cached
 - show a refresh button below the QR Code
-
-- integrate an URL shortener
 
 - render data URL claim values as links
 
