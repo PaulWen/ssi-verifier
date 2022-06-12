@@ -28,9 +28,6 @@ docker run -p 8888:8080 --name ssi-verifier ssi-verifier
 
 ## Technical Debt
 
-- AcaPy Webhook Endpoint muss geschützt werden, da ein Angreifer ansonsten AcaPy
-  imitieren kann und uns falsche Daten schicken kann - nur der AcaPy sollte die
-  Webhooks aufrufen können!!
 - WebSockets mit authorization Header absichern, damit nicht jeder subscriben
   kann
 - Socket stream html element sollte nur eine Connection aufbauen und dann zu
