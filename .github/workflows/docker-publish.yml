@@ -1,8 +1,8 @@
-name: Create and publish a Docker image
+name: Create and publish a Docker image for each commit tagged
 
 on:
   push:
-    branches: ['main']
+    tags: ['*', '**']
 
 env:
   REGISTRY: ghcr.io
