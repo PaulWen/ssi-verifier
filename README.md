@@ -14,17 +14,26 @@ A simple SSI verifier app that integrates with the Lissi Agent.
 
 ## Build and Run Docker Container
 
-### Build Docker Container
+### Build and Run Docker Container Locally
 
 ```
-docker build -t ssi-verifier . 
-```
-
-### Run Docker Container
-
-```
+docker build -t ssi-verifier .
+ 
 docker run -p 8888:8080 --name ssi-verifier ssi-verifier
 ```
+
+### Run Pre-Build Docker Container
+
+```
+docker run -p 8888:8080 --name ssi-verifier ghcr.io/paulwen/ssi-verifier:latest
+```
+
+## Release Process
+
+1. Update version in [pom.xml](./pom.xml)
+2. Add a tag `vX.X.X`
+3. The [GitHub Action](./.github/workflows/docker-publish.yml) will
+   automatically build and publish a new docker image
 
 ## Technical Debt
 
@@ -35,7 +44,6 @@ docker run -p 8888:8080 --name ssi-verifier ssi-verifier
 
 ## Next Steps
 
-- create a Git Pipeline to build and publish the Docker Image
 - Create a Helm Chart to deploy the SSI Verifier service
 
 - store proof request results to an in-memory database
