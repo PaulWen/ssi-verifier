@@ -46,7 +46,8 @@ class TurboStreamConnection extends HTMLElement {
     }
 
     connectWebSocket() {
-        var url = "ws://" + document.location.host + "/stomp";
+        var protocol = location.protocol === "https:" ? "wss" : "ws";
+        var url = protocol + "://" + document.location.host + "/stomp";
         var webSocketClient = Stomp.client(url);
 
         var headers = {};
