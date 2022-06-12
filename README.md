@@ -28,6 +28,32 @@ docker run -p 8888:8080 --name ssi-verifier ssi-verifier
 docker run -p 8888:8080 --name ssi-verifier ghcr.io/paulwen/ssi-verifier:latest
 ```
 
+## Helm Deployment
+
+The [Helm chart](./k8s) can be used to deploy the SSI-Verifier app to a K8s
+cluster.
+
+### Configuration
+
+As outlined in the [values.yaml](./k8s/values.yaml) the following configuration
+is required:
+
+- `ssiVerifier.keycloakUrl`: URL to the Keycloak to authenticate the user and
+  get access to the API of the Lissi Agent instance (e.g.
+  "https://<DOMAIN>/auth")
+- `ssiVerifier.lissiAgentApiUrl`: URL to the API of the Lissi Agent instance
+  (e.g.
+  "https:/<DOMAIN>/ctrl/api/v1.0")
+- `ssiVerifier.tenantId`: The ID of the tenant of the Lissi Agent instance
+  (e.g. "default_tenant")
+- `ssiVerifier.k8sSecretRef`: The name of the K8s secret - see below  (e.g.
+  "ssi-verifier")
+
+### Secret
+
+- `webhookApiKey`: The API key used to authenticate the webhook calls from the
+  AcaPy instance
+
 ## Release Process
 
 1. Update version in [pom.xml](./pom.xml)
