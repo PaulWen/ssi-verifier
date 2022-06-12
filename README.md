@@ -31,7 +31,8 @@ docker run -p 8888:8080 --name ssi-verifier ghcr.io/paulwen/ssi-verifier:latest
 ## Release Process
 
 1. Update version in [pom.xml](./pom.xml)
-2. Add a tag `vX.X.X`
+1. Update app version in [Chart.yaml](./k8s/Chart.yaml)
+2. Add a tag `X.X.X`
 3. The [GitHub Action](./.github/workflows/docker-publish.yml) will
    automatically build and publish a new docker image
 
