@@ -41,8 +41,7 @@ class LissiAgentSsiVerifier(
         return connectionlessProofRequestResponse.toDo()
     }
 
-    internal fun loadImageDataUrlEncoded(imageUrl: String): String {
-        val imageId = imageUrl.split("/").last()
+    internal fun loadImageDataUrlEncoded(imageId: String): String {
         val imageBytes: ByteArray = http.getForObject("/images/download/$imageId", ByteArray::class)
 
         return "data:image/png;base64,${Base64.getEncoder().encodeToString(imageBytes)}"
@@ -52,14 +51,14 @@ class LissiAgentSsiVerifier(
 internal data class ProofRequestTemplateResponse(
     val templateId: String,
     val name: String,
-    val imageUrl: String?
+    val imageId: String?
 ) {
     fun toDo(lissiAgentSsiVerifier: LissiAgentSsiVerifier): ProofRequestTemplateDo {
-        if (imageUrl != null) {
+        if (imageId != null) {
             return ProofRequestTemplateDo(
                 templateId,
                 name,
-                lissiAgentSsiVerifier.loadImageDataUrlEncoded(imageUrl)
+                lissiAgentSsiVerifier.loadImageDataUrlEncoded(imageId)
             )
         }
 
