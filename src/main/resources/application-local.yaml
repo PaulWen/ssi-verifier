@@ -13,4 +13,4 @@ keycloak:
 
 lissi-agent:
   url: http://localhost:9080/ctrl/api/v1.0
-  tenant-id: default_tenant
+  tenant-id: test-agent

@@ -69,7 +69,7 @@ class AcaPyWebhookController(
                 proofExchangeInteractor.verifiedProof(
                     VerifiedProofDo(
                         proof.presentationExchangeId,
-                        proof.state == PresentationExchangeState.VERIFIED,
+                        proof.verified,
                         gson.fromJson(proof.presentation.get("requested_proof"), PresentationAcaPy::class.java).toDo(proof.presentationRequest.requestedPredicates.values.toList())
                     )
                 )

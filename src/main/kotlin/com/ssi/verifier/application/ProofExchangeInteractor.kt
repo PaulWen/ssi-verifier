@@ -28,8 +28,8 @@ class ProofExchangeInteractor(
     fun verifiedProof(proofExchangeRecordDo: VerifiedProofDo) {
         if (!proofExchangeRecordDo.isValid) {
             notificationService.invalidProofExchangeUpdate(proofExchangeRecordDo)
+        } else {
+            notificationService.validProofExchangeUpdate(proofExchangeRecordDo)
         }
-
-        notificationService.validProofExchangeUpdate(proofExchangeRecordDo)
     }
 }
