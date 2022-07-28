@@ -72,11 +72,12 @@ is required:
 
 ## Next Steps
 
-- optimize the UI for mobile devices
 - introduce a default error page
 - integrate an URL shortener
+- investigate why a user needs to log-in twice after logging out
+- WebSocket connection is being lost sometimes and no proof request results are being delivered - maybe the WebSocket HTTP connection times out after one minute or less
 
-- store proof request results to an in-memory database
+- store proof request results to an in-memory database to not only share the result via a WebSocket event but also after refreshing the page
 - clean up the database every 15 minutes and all database entries expire after
   15 minutes
 - selecting a proof request template generates a new connectionless proof
