@@ -6,11 +6,15 @@ import com.ssi.verifier.domain.models.VerifiedProofDo
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.hyperledger.aries.api.present_proof.PresentationExchangeRecord
-import org.hyperledger.aries.api.present_proof.PresentationExchangeState
 import org.hyperledger.aries.webhook.EventHandler
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseBody
 
 
 @Controller
@@ -21,7 +25,6 @@ class AcaPyWebhookController(
 ) {
     private val acaPyEventHandler = AcaPyEventHandler(proofExchangeInteractor)
     private val log: Log = LogFactory.getLog(AcaPyWebhookController::class.java)
-
 
     private val X_API_KEY = "x-api-key"
 

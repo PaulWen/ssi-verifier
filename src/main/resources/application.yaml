@@ -9,6 +9,7 @@ spring:
       matching-strategy: ant_path_matcher # required for the Swagger UI to work
 
 keycloak:
+  enabled: false
   auth-server-url: https://lissi-cloud-dev.westeurope.cloudapp.azure.com/auth
   realm: lissi-cloud
   resource: postman
@@ -24,4 +25,9 @@ keycloak:
 lissi-agent:
   url: https://lissi-cloud-dev.westeurope.cloudapp.azure.com/ctrl/api/v1.0
   tenant-id: default_tenant
+  webhook-api-key: secret-key
+
+acapy:
+  url: http://ssi-verifier-acapy:10000
+  api-key: secret-key
   webhook-api-key: secret-key

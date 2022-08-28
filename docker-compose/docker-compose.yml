@@ -47,7 +47,7 @@ services:
         --auto-ping-connection \
         --auto-verify-presentation \
         --log-level INFO \
-        --webhook-url http://host-gateway:9080/api/acapy-webhook
+        --webhook-url http://host-gateway:9080/api/acapy-webhook#${SSI_VERIFIER_WEBHOOK_API_KEY}
       "
     ]
     networks:
