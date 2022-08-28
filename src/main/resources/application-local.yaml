@@ -10,6 +10,6 @@ keycloak:
   auth-server-url: http://keycloak.lissi-cloud.localhost:8080/auth
 
 acapy:
-  url: http://host-gateway:10000
+  url: http://localhost:10000
   api-key:
   webhook-api-key: secret-key

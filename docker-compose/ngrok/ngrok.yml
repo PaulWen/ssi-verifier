@@ -1,0 +1,9 @@
+web_addr: localhost:4040
+tunnels:
+  http_acapy:
+    proto: http
+    addr: 10001
+    schemes:
+      - https
+version: "2"
+region: us

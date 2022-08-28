@@ -6,7 +6,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      -   acapy-db:/var/lib/postgresql/data
+      - acapy-db:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: ${ACAPY_DB_USER}
@@ -29,10 +29,13 @@ services:
       "sleep 10;
         aca-py start \
         --auto-provision
+        --read-only-ledger
+        --wallet-local-did
+        --seed ${ACAPY_DID_SEED}
         --admin 0.0.0.0 10000 \
         --inbound-transport http 0.0.0.0 10001 \
         --outbound-transport http \
-        --endpoint http://issuer-verifier-acapy:10001 \
+        --endpoint ${NGROK_PUBLIC_URL_ACAPY} \
         --genesis-file /genesis-file.txt \
         --ledger-pool-name ${ACAPY_LEDGER_NAME} \
         --invite-base-url didcomm://aries_connection_invitation \
@@ -47,7 +50,7 @@ services:
         --auto-ping-connection \
         --auto-verify-presentation \
         --log-level INFO \
-        --webhook-url http://host-gateway:9080/api/acapy-webhook#${SSI_VERIFIER_WEBHOOK_API_KEY}
+        --webhook-url http://host.docker.internal:9080/api/acapy-webhook#${SSI_VERIFIER_WEBHOOK_API_KEY}
       "
     ]
     networks:
@@ -72,7 +75,7 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      -   keycloak-db:/var/lib/postgresql/data
+      - keycloak-db:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${KEYCLOAK_DB_DATABASE_NAME}
       POSTGRES_USER: ${KEYCLOAK_DB_USER}
@@ -107,7 +110,7 @@ services:
     volumes:
       - ./keycloak/imports:/opt/keycloak/imports
     depends_on:
-      -   ssi-verifier-keycloak-db
+      - ssi-verifier-keycloak-db
     networks:
       - ssi-verifier-network
     logging:

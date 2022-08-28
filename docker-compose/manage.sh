@@ -28,6 +28,16 @@ EOF
 }
 
 function start() {
+  echo "Retrieving Ngrok Public URL ..."
+  export NGROK_PUBLIC_URL_ACAPY=`curl -s http://127.0.0.1:4040/api/tunnels/http_acapy | jq -r .public_url`
+  if [[ -z "$NGROK_PUBLIC_URL_ACAPY" ]]; then
+      echo 1>&2 "Error: Ngrok is NOT running and therefore the AcaPy DIDcomm endpoint can not be exposed publicly"
+      exit 2
+  fi
+
+  echo "Generating random DID seed and registering DID to ledger..."
+  export ACAPY_DID_SEED=$(cat /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+
   echo "Starting SSI-Verifier System ..."
   docker-compose -f $SCRIPT_HOME/docker-compose.yml up -d
 }
