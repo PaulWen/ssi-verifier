@@ -44,7 +44,6 @@ services:
         --wallet-storage-type postgres_storage \
         --wallet-storage-config '{\"url\":\"ssi-verifier-acapy-db:5432\",\"max_connections\":${ACAPY_MAX_DATABASE_CONNECTIONS}}' \
         --wallet-storage-creds '{\"account\":\"${ACAPY_DB_USER}\",\"password\":\"${ACAPY_DB_PASSWORD}\",\"admin_account\":\"${ACAPY_DB_USER}\",\"admin_password\":\"${ACAPY_DB_PASSWORD}\"}' \
-        ${ACAPY_DID_SEED_SETTING} \
         --auto-ping-connection \
         --auto-verify-presentation \
         --log-level INFO \

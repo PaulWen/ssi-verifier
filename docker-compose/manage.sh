@@ -28,14 +28,6 @@ EOF
 }
 
 function start() {
-  if [ "${ACAPY_LEDGER_NAME}" = lissi-test ]; then
-    echo "Generating random DID seed and registering DID to ledger..."
-    ACAPY_DID_SEED=$(cat /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
-    export ACAPY_DID_SEED_SETTING="--seed ${ACAPY_DID_SEED}"
-
-    curl -d "{\"role\": \"ENDORSER\", \"seed\":\"$ACAPY_DID_SEED\"}" -H "Content-Type: application/json" -X POST http://test-ledger.lissi.id/register
-  fi
-
   echo "Starting SSI-Verifier System ..."
   docker-compose -f $SCRIPT_HOME/docker-compose.yml up -d
 }
