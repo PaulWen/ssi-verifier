@@ -9,10 +9,6 @@ spring:
 keycloak:
   auth-server-url: http://keycloak.lissi-cloud.localhost:8080/auth
 
-lissi-agent:
-  url: http://localhost:9080/ctrl/api/v1.0
-  tenant-id: test-agent
-
 acapy:
   url: http://host-gateway:10000
   api-key:

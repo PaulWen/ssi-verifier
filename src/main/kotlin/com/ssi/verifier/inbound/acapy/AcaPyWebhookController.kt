@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody
 @RequestMapping("/api/acapy-webhook")
 class AcaPyWebhookController(
     proofExchangeInteractor: ProofExchangeInteractor,
-    @Value("\${lissi-agent.webhook-api-key}") private val webhookApiKey: String
+    @Value("\${acapy.webhook-api-key}") private val webhookApiKey: String
 ) {
     private val acaPyEventHandler = AcaPyEventHandler(proofExchangeInteractor)
     private val log: Log = LogFactory.getLog(AcaPyWebhookController::class.java)
