@@ -1,0 +1,127 @@
+version: "3.7"
+services:
+  ssi-verifier-acapy-db:
+    container_name: ssi-verifier-acapy-db
+    image: ${POSTGRES_IMAGE}
+    ports:
+      - "5433:5432"
+    volumes:
+      -   acapy-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${ACAPY_DB_USER}
+      POSTGRES_PASSWORD: ${ACAPY_DB_PASSWORD}
+    networks:
+      - ssi-verifier-network
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
+    restart: always
+
+  ssi-verifier-acapy:
+    container_name: ssi-verifier-acapy
+    image: ${ACAPY_IMAGE}
+    entrypoint: /bin/bash
+    command: [
+      "-c",
+      "sleep 10;
+        aca-py start \
+        --auto-provision
+        --admin 0.0.0.0 10000 \
+        --inbound-transport http 0.0.0.0 10001 \
+        --outbound-transport http \
+        --endpoint http://issuer-verifier-acapy:10001 \
+        --genesis-file /genesis-file.txt \
+        --ledger-pool-name ${ACAPY_LEDGER_NAME} \
+        --invite-base-url didcomm://aries_connection_invitation \
+        --admin-insecure-mode \
+        --label ${ACAPY_LABEL} \
+        --wallet-type askar \
+        --wallet-name ${ACAPY_DB_DATABASE_NAME} \
+        --wallet-key ${ACAPY_WALLET_KEY} \
+        --wallet-storage-type postgres_storage \
+        --wallet-storage-config '{\"url\":\"ssi-verifier-acapy-db:5432\",\"max_connections\":${ACAPY_MAX_DATABASE_CONNECTIONS}}' \
+        --wallet-storage-creds '{\"account\":\"${ACAPY_DB_USER}\",\"password\":\"${ACAPY_DB_PASSWORD}\",\"admin_account\":\"${ACAPY_DB_USER}\",\"admin_password\":\"${ACAPY_DB_PASSWORD}\"}' \
+        ${ACAPY_DID_SEED_SETTING} \
+        --auto-ping-connection \
+        --auto-verify-presentation \
+        --log-level INFO \
+        --webhook-url http://host-gateway:9080/api/acapy-webhook
+      "
+    ]
+    networks:
+      - ssi-verifier-network
+    ports:
+      - "10000:10000" # Admin API
+      - "10001:10001" # DIDcomm
+    volumes:
+      - ./acapy/genesis-files/${ACAPY_LEDGER_NAME}.txt:/genesis-file.txt:ro
+    depends_on:
+      - ssi-verifier-acapy-db
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
+    restart: always
+
+  ssi-verifier-keycloak-db:
+    container_name: ssi-verifier-keycloak-db
+    image: ${POSTGRES_IMAGE}
+    ports:
+      - "5434:5432"
+    volumes:
+      -   keycloak-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${KEYCLOAK_DB_DATABASE_NAME}
+      POSTGRES_USER: ${KEYCLOAK_DB_USER}
+      POSTGRES_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+    networks:
+      - ssi-verifier-network
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
+    restart: always
+
+  ssi-verifier-keycloak:
+    container_name: ssi-verifier-keycloak
+    image: ${KEYCLOAK_IMAGE}
+    ports:
+      - "8080:8080"
+    environment:
+      KC_DB: "postgres"
+      KC_LOG_LEVEL: "INFO"
+      KC_DB_URL: "jdbc:postgresql://ssi-verifier-keycloak-db:5432/${KEYCLOAK_DB_DATABASE_NAME}"
+      KC_DB_USERNAME: ${KEYCLOAK_DB_USER}
+      KC_DB_PASSWORD: ${KEYCLOAK_DB_PASSWORD}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN_USER}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+    entrypoint: "/opt/keycloak/bin/kc.sh start-dev \
+                -Dkeycloak.migration.action=import \
+                -Dkeycloak.migration.provider=dir \
+                -Dkeycloak.migration.dir=/opt/keycloak/imports \
+                -Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
+    volumes:
+      - ./keycloak/imports:/opt/keycloak/imports
+    depends_on:
+      -   ssi-verifier-keycloak-db
+    networks:
+      - ssi-verifier-network
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
+    restart: always
+
+networks:
+  ssi-verifier-network:
+    name: ssi-verifier-network
+
+volumes:
+  acapy-db:
+  keycloak-db:
