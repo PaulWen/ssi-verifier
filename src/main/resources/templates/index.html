@@ -5,26 +5,81 @@
 >
 <body>
 <main class="my-5 mx-2" layout:fragment="content">
-
     <div class="container">
-        <h2>Select a Proof Template</h2>
-        <div class="row my-2 px-3" th:if="${proofRequestTemplates.isEmpty()}">
-            No proof templates available. Please create proof templates ...
+        <h2>Enter an AnonCreds Proof Request</h2>
+
+
+        <div class="row my-2 px-3 justify-content-end">
+            <button class="btn btn-primary"
+                    onclick="beautifyJson()">
+                Beautify JSON
+            </button>
         </div>
-        <div class="row my-2 px-3" th:if="${!proofRequestTemplates.isEmpty()}">
-            <div class="col-md-4 col-xl-3 col-lg-4 mb-3 col-sm-5"
-                 th:each="proofRequestTemplate : ${proofRequestTemplates}">
-                <a th:href="'/proof-request/' + ${proofRequestTemplate.id}" class="text-dark">
-                    <p class="fw-bold mb-1" th:text="${proofRequestTemplate.name}"></p>
-                    <img class="card"
-                         alt=""
-                         style="width: 200px; height: 128px"
-                         th:src="${proofRequestTemplate.imageDataUrl}"/>
+
+        <div class="row my-2 px-3">
+            <div class="alert alert-danger w-100 d-none" id="jsonErrors"></div>
+        </div>
+
+        <div class="row my-2 px-3">
+            <textarea class="form-control" id="jsonEditor" rows=16>
+                {
+                    "name": "Self-Attested Proof Request",
+                    "version": "1.0",
+                    "requested_attributes": {
+                      "self-attested-1": {
+                        "name": "Name",
+                        "restrictions": []
+                      },
+                      "self-attested-2": {
+                        "name": "Age",
+                        "restrictions": []
+                      }
+                    },
+                    "requested_predicates": {}
+                }
+            </textarea>
+        </div>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <a class="btn btn-primary btn-block mx-5 my-2"
+                   href="/proof-request/001">
+                    Generate Proof Request
                 </a>
+            </div>
+            <div class="row justify-content-center">
+                <button class="btn btn-secondary btn-block mx-5 my-2" onclick=clearJsonEditor()>Clear Editor</button>
             </div>
         </div>
     </div>
 
+    <script>
+        function clearJsonEditor() {
+            document.getElementById('jsonEditor').value = "{}";
+        }
+
+        function beautifyJson() {
+            const jsonErrorsAlert = document.getElementById('jsonErrors')
+
+            const dirtyJson = document.getElementById('jsonEditor').value;
+            let parsedJson = "";
+
+            try {
+                parsedJson = JSON.parse(dirtyJson)
+            } catch (error) {
+                jsonErrorsAlert.textContent = error.message;
+                jsonErrorsAlert.classList.remove("d-none")
+                return
+            }
+
+            jsonErrorsAlert.classList.add("d-none")
+
+            const cleanJson = JSON.stringify(parsedJson, undefined, 4);
+            document.getElementById('jsonEditor').value = cleanJson;
+        }
+
+        beautifyJson()
+    </script>
 </main>
 
 </body>

@@ -29,7 +29,7 @@
 
     <!-- Custom Style -->
     <meta name="viewport"
-          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=280, height=device-height, target-densitydpi=medium-dpi"/>
+          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=280, height=device-height"/>
 </head>
 <body>
 <!-- Navbar -->
@@ -43,10 +43,8 @@
         </div>
         <ul class="navbar-nav d-flex flex-row">
             <li class="nav-item me-3 me-lg-0">
-                <a class="nav-link" href="/logout">
-                    <i class="fa-solid fa-lg fa-arrow-right-from-bracket text-secondary"
-                       title="Logout"
-                    ></i>
+                <a class="nav-link" href="/logout" data-toggle="tooltip" data-placement="bottom" title="Logout">
+                    <i class="fa-solid fa-lg fa-arrow-right-from-bracket text-secondary"></i>
                 </a>
             </li>
         </ul>
@@ -56,6 +54,14 @@
 
 <main layout:fragment="content">
 </main>
+
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'))
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
+
 
 </body>
 </html>
