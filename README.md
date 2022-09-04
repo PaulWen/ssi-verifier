@@ -99,3 +99,8 @@ is required:
       suddenly handels data from many SSI agents
     - to ensure proper data isolation a new SSI verifier instance should be
       deployed for each Lissi Agent instance
+
+## Theming
+
+Bootstrap is used as the UI library. To generate and export a custom theme
+the free [Bootstrap Builder](https://bootstrap.build/app/projects) is being used.
