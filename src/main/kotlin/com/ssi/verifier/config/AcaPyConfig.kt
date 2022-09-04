@@ -1,7 +1,6 @@
 package com.ssi.verifier.config
 
 import com.ssi.verifier.outbound.services.acapy.AcaPyOkHttpInterceptor
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.hyperledger.aries.AriesClient
 import org.springframework.beans.factory.annotation.Value
@@ -19,34 +18,7 @@ class AcaPyConfig(
     @Value("\${acapy.http-timeout-in-seconds}") private val acaPyHttpTimeoutInSeconds: Long,
 ) {
 
-    @Bean(name = ["AcaPyHttpClient"])
-    @Scope(scopeName = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
-    fun buildAcaPyHttpClient(
-        acaPyOkHttpInterceptor: AcaPyOkHttpInterceptor
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(
-                Interceptor { chain ->
-                    var request = chain.request()
-
-                    if (acaPyApiKey != null) {
-                        request = request.newBuilder()
-                            .addHeader("X-API-Key", "$acaPyApiKey")
-                            .build()
-                    }
-
-                    chain.proceed(request)
-                }
-            )
-            .addInterceptor(acaPyOkHttpInterceptor)
-            .writeTimeout(acaPyHttpTimeoutInSeconds, TimeUnit.SECONDS)
-            .readTimeout(acaPyHttpTimeoutInSeconds, TimeUnit.SECONDS)
-            .connectTimeout(acaPyHttpTimeoutInSeconds, TimeUnit.SECONDS)
-            .callTimeout(acaPyHttpTimeoutInSeconds, TimeUnit.SECONDS)
-            .build()
-    }
-
-    @Bean(name = ["AcaPyAriesClient"])
+    @Bean(name = ["AcaPy"])
     @Scope(scopeName = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
     fun buildAcaPyAriesClient(
         acaPyOkHttpInterceptor: AcaPyOkHttpInterceptor

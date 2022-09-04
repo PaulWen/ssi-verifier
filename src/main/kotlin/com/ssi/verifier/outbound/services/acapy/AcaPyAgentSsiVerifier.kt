@@ -1,28 +1,22 @@
 package com.ssi.verifier.outbound.services.acapy
 
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.ssi.verifier.domain.models.ConnectionlessProofRequestDo
 import com.ssi.verifier.domain.models.ProofRequestTemplateDo
 import com.ssi.verifier.domain.services.SsiVerifierService
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import org.hyperledger.aries.AriesClient
+import org.hyperledger.aries.api.present_proof.PresentProofRequest
+import org.hyperledger.aries.api.present_proof.PresentProofRequest.ProofRequest
 import org.hyperledger.aries.api.present_proof.PresentationExchangeRecord
-import org.hyperledger.aries.config.GsonConfig
 import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import java.util.*
 
 
 @Service
 class AcaPySsiVerifier(
-    @Qualifier("AcaPyAriesClient") private val acaPyAriesClient: AriesClient,
-    @Qualifier("AcaPyHttpClient") private val acaPyHttpClient: OkHttpClient,
-    @Value("\${acapy.url}") private val acaPyUrl: String,
+    @Qualifier("AcaPy") private val acaPy: AriesClient,
 ) : SsiVerifierService {
 
     override fun allProofRequestTemplates(): List<ProofRequestTemplateDo> {
@@ -44,9 +38,8 @@ class AcaPySsiVerifier(
             throw NotImplementedError()
         }
 
-        val json = """
+        val proofRequestJson = """
             {
-              "proof_request": {
                 "name": "Self-Attested",
                 "version": "1.0",
                 "requested_attributes": {
@@ -61,19 +54,15 @@ class AcaPySsiVerifier(
                 },
                 "requested_predicates": {},
                 "nonce": "742995230032692452171111"
-              }
             }
         """
 
-        val req: Request = Request.Builder()
-            .url("$acaPyUrl/present-proof/create-request")
-            .post(json.toRequestBody("application/json; charset=utf-8".toMediaType()))
-            .build()
-        val response: Response = acaPyHttpClient.newCall(req).execute()
-        val presentationExchange = GsonConfig.defaultConfig().fromJson(response.body?.string(), PresentationExchangeRecord::class.java)
+        val proofRequest = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create().fromJson(proofRequestJson, ProofRequest::class.java)
 
-        val did = acaPyAriesClient.walletDid().get().first()
-        val didCommEndpoint = acaPyAriesClient.walletGetDidEndpoint(did.did).get().endpoint
+        val presentationExchange: PresentationExchangeRecord = acaPy.presentProofCreateRequest(PresentProofRequest.builder().proofRequest(proofRequest).build()).get()
+
+        val did = acaPy.walletDid().get().first()
+        val didCommEndpoint = acaPy.walletGetDidEndpoint(did.did).get().endpoint
 
         val didCommMessage = presentationExchange.presentationRequestDict
 
