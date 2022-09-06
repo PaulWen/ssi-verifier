@@ -2,7 +2,7 @@ import {
     connectStreamSource,
     disconnectStreamSource
 } from "https://unpkg.com/@hotwired/turbo@7.1.0/dist/turbo.es2017-esm.js";
-import "https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js";
+import "https://cdn.jsdelivr.net/npm/@stomp/stompjs@6.1.2/bundles/stomp.umd.min.js";
 
 class TurboStreamConnection extends HTMLElement {
     get src() {
@@ -29,7 +29,7 @@ class TurboStreamConnection extends HTMLElement {
     disconnectedCallback() {
         disconnectStreamSource(this);
         if (this.webSocketClient) {
-            this.webSocketClient.disconnect();
+            this.webSocketClient.deactivate();
             this.webSocketClient = null;
         }
     }
@@ -46,24 +46,58 @@ class TurboStreamConnection extends HTMLElement {
     }
 
     connectWebSocket() {
-        var protocol = location.protocol === "https:" ? "wss" : "ws";
-        var url = protocol + "://" + document.location.host + "/stomp";
-        var webSocketClient = Stomp.client(url);
+        // StompJS Docs: https://stomp-js.github.io/guide/stompjs/using-stompjs-v5.html
 
-        var headers = {};
-        webSocketClient.connect(headers, () => {
+        const protocol = location.protocol === "https:" ? "wss" : "ws";
+        const url = protocol + "://" + document.location.host + "/stomp";
+        const webSocketClient = new StompJs.Client({
+            brokerURL: url,
+            connectHeaders: {},
+            debug: str => {
+                if (this.debug === "true") {
+                    console.log(str);
+                }
+            },
+            reconnectDelay: 200, // wait 200 ms before attempting to auto reconnect
+            heartbeatIncoming: 0, // client does not want to receive heartbeats from the server
+            heartbeatOutgoing: 0 // client will not send any heartbeats
+        });
+
+        webSocketClient.onDisconnect = frame => {
+            if (this.debug === "true") {
+                console.log("STOMP client has been disconnected.")
+            }
+        };
+
+        webSocketClient.onWebSocketClose = frame => {
+            if (this.debug === "true") {
+                console.log("STOMP connection has been closed.")
+            }
+        };
+
+        webSocketClient.onConnect = frame => {
+            if (this.debug === "true") {
+                console.log("STOMP client has been connected.")
+            }
+
             webSocketClient.subscribe(this.src, message => {
                 // called when the client receives a STOMP message from the server
                 if (message.body) {
                     this.dispatchMessageEvent(message.body)
                 }
             });
-        });
+        };
 
-        if (this.debug === "false") {
-            webSocketClient.debug = (str) => {
-            };
-        }
+        webSocketClient.onStompError = function (frame) {
+            // Will be invoked in case of error encountered at Broker
+            // Bad login/passcode typically will cause an error
+            // Complaint brokers will set `message` header with a brief message. Body may contain details.
+            // Compliant brokers will terminate the connection after any error
+            console.error('Broker reported error: ' + frame.headers['message']);
+            console.error('Additional details: ' + frame.body);
+        };
+
+        webSocketClient.activate();
 
         return webSocketClient;
     }
