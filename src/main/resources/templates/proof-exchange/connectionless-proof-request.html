@@ -18,6 +18,7 @@
                 </a>
                 <button type="button" class="btn btn-primary ml-2"
                         data-bs-toggle="modal" data-bs-target="#shareModal"
+                        onclick="updateUrl()"
                         title="Share the Proof Template">
                     <i class="fa-solid fa-share-nodes"></i>
                 </button>
@@ -68,14 +69,13 @@
                     </div>
                 </div>
             </div>
-
-            <script>
-                window.onload = function () {
-                    const currentUrl = window.location.href;
-                    document.getElementById("shareUrl").innerHTML = currentUrl;
-                }
-            </script>
         </div>
+
+        <script>
+            function updateUrl() {
+                document.getElementById("shareUrl").innerHTML = window.location.href;
+            }
+        </script>
     </turbo-frame>
 </main>
 </body>
