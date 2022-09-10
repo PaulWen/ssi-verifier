@@ -56,7 +56,7 @@
                     <div class="modal-body">
                         <p>
                             To share the proof template with other users use the following link:<br/>
-                            <code>http://localhost:9080/app/proof-exchange/29ca4ba4-ec63-4730-946c-14c3d63dab28</code>
+                            <code id="shareUrl"></code>
                         </p>
                         <p>
                             Note that this will NOT share any proof presentation results.
@@ -68,6 +68,13 @@
                     </div>
                 </div>
             </div>
+
+            <script>
+                window.onload = function () {
+                    const currentUrl = window.location.href;
+                    document.getElementById("shareUrl").innerHTML = currentUrl;
+                }
+            </script>
         </div>
     </turbo-frame>
 </main>
