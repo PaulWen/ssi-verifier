@@ -1,5 +1,6 @@
 package com.ssi.verifier.outbound.repositories.models
 
+import com.ssi.verifier.domain.models.AnonCredsProofRequestTemplate
 import com.ssi.verifier.domain.models.NewProofTemplate
 import com.ssi.verifier.domain.models.ProofTemplate
 import com.ssi.verifier.domain.models.ProofTemplateId
@@ -23,7 +24,7 @@ class ProofTemplateDao(
     fun toDomain(): ProofTemplate {
         return ProofTemplate(
             id = ProofTemplateId(id!!),
-            proofRequest = proofRequest
+            proofRequestTemplate = AnonCredsProofRequestTemplate(proofRequest)
         )
     }
 }
@@ -31,12 +32,12 @@ class ProofTemplateDao(
 fun ProofTemplate.toDao(): ProofTemplateDao {
     return ProofTemplateDao(
         id = id.value,
-        proofRequest = proofRequest
+        proofRequest = proofRequestTemplate.value
     )
 }
 
 fun NewProofTemplate.toDao(): ProofTemplateDao {
     return ProofTemplateDao(
-        proofRequest = proofRequest
+        proofRequest = proofRequestTemplate.value
     )
 }

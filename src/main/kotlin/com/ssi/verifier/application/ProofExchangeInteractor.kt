@@ -1,5 +1,6 @@
 package com.ssi.verifier.application
 
+import AnonCredsProofRequest
 import com.ssi.verifier.domain.models.ConnectionlessProofRequest
 import com.ssi.verifier.domain.models.ProofTemplate
 import com.ssi.verifier.domain.models.VerifiedProofExchange
@@ -13,7 +14,7 @@ class ProofExchangeInteractor(
     private val notificationService: NotificationService
 ) {
     fun newConnectionlessProofRequest(proofTemplate: ProofTemplate): ConnectionlessProofRequest {
-        return ssiVerifier.newConnectionlessProofRequest(proofTemplate)
+        return ssiVerifier.newConnectionlessProofRequest(AnonCredsProofRequest(proofTemplate))
     }
 
     fun verifiedProof(proofExchangeRecordDo: VerifiedProofExchange) {

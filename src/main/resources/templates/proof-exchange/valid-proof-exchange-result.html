@@ -67,7 +67,7 @@
                 <h4>Credential Attributes</h4>
                 <table class="mx-3 my-3">
                     <tr th:each="credentialAttribute : ${verifiedProofExchange.presentation.credentialAttributes}">
-                        <td><strong th:text="${credentialAttribute.key}">keyasdfasdf</strong></td>
+                        <td><strong th:text="${credentialAttribute.key}">key</strong></td>
                         <td class="px-4" th:text="${credentialAttribute.value}">value</td>
                     </tr>
                 </table>

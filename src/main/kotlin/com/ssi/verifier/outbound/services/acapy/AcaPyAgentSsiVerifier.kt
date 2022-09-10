@@ -1,9 +1,9 @@
 package com.ssi.verifier.outbound.services.acapy
 
+import AnonCredsProofRequest
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.ssi.verifier.domain.models.ConnectionlessProofRequest
-import com.ssi.verifier.domain.models.ProofTemplate
 import com.ssi.verifier.domain.services.SsiVerifierService
 import org.hyperledger.aries.AriesClient
 import org.hyperledger.aries.api.present_proof.PresentProofRequest
@@ -19,10 +19,8 @@ class AcaPySsiVerifier(
     @Qualifier("AcaPy") private val acaPy: AriesClient,
 ) : SsiVerifierService {
 
-    override fun newConnectionlessProofRequest(proofTemplate: ProofTemplate): ConnectionlessProofRequest {
-        // TODO adopt nonce -> generate random nonce
-
-        val proofRequest = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create().fromJson(proofTemplate.proofRequest, ProofRequest::class.java)
+    override fun newConnectionlessProofRequest(proofReuqest: AnonCredsProofRequest): ConnectionlessProofRequest {
+        val proofRequest = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create().fromJson(proofReuqest.value, ProofRequest::class.java)
 
         val presentationExchange: PresentationExchangeRecord = acaPy.presentProofCreateRequest(PresentProofRequest.builder().proofRequest(proofRequest).build()).get()
 

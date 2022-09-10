@@ -1,6 +1,7 @@
 package com.ssi.verifier.inbound.webapp
 
 import com.ssi.verifier.application.ProofTemplateInteractor
+import com.ssi.verifier.domain.models.AnonCredsProofRequestTemplate
 import com.ssi.verifier.domain.models.NewProofTemplate
 import io.swagger.annotations.ApiParam
 import org.springframework.stereotype.Controller
@@ -32,7 +33,7 @@ class EditorController(
         @ApiParam(value = "AnonCreds Proof Request in JSON Format") @RequestParam(required = true, value = "proofRequestJson") proofRequestJson: String,
         model: Model
     ): RedirectView {
-        val newProofTemplate = NewProofTemplate(proofRequestJson)
+        val newProofTemplate = NewProofTemplate(AnonCredsProofRequestTemplate(proofRequestJson))
         val proofTemplateId = proofTemplateInteractor.newProofTemplate(newProofTemplate)
 
         return RedirectView("${ProofExchangeController.BASE_URL}/${proofTemplateId.value}")
