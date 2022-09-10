@@ -1,7 +1,7 @@
 package com.ssi.verifier.inbound.acapy
 
-import com.ssi.verifier.domain.models.PresentationDo
-import com.ssi.verifier.domain.models.RequestedProofRevealedAttrGroupDo
+import com.ssi.verifier.domain.models.Presentation
+import com.ssi.verifier.domain.models.RequestedProofRevealedAttrGroup
 import org.hyperledger.aries.api.present_proof.PresentProofRequest.ProofRequest.ProofRequestedPredicates
 
 data class PresentationAcaPy(
@@ -10,7 +10,7 @@ data class PresentationAcaPy(
     val self_attested_attrs: Map<String, String> = emptyMap(),
     val unrevealed_attrs: Map<String, String> = emptyMap(),
 ) {
-    fun toDo(proofRequestedPredicates: List<ProofRequestedPredicates>): PresentationDo {
+    fun toDo(proofRequestedPredicates: List<ProofRequestedPredicates>): Presentation {
         var credentialAttributes: Map<String, String> = emptyMap()
 
         credentialAttributes = credentialAttributes + revealed_attrs.mapValues { it.value.raw }
@@ -21,7 +21,7 @@ data class PresentationAcaPy(
             credentialAttributes = credentialAttributes + mapOf(proofRequestedPredicate.name to "${proofRequestedPredicate.pType} ${proofRequestedPredicate.pValue}")
         }
 
-        return PresentationDo(
+        return Presentation(
             credentialAttributes = credentialAttributes,
             selfAttestedAttributes = self_attested_attrs
         )
@@ -38,7 +38,7 @@ data class RequestedProofRevealedAttrGroupAcaPy(
     val sub_proof_index: Int,
     val values: Map<String, AttributeAcaPy>
 ) {
-    fun toDo() = RequestedProofRevealedAttrGroupDo(
+    fun toDo() = RequestedProofRevealedAttrGroup(
         values = values.mapValues { it.value.raw }
     )
 }

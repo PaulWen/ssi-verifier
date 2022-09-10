@@ -1,6 +1,6 @@
 package com.ssi.verifier.domain.models
 
-data class ProofRequestTemplateDo(
+data class ProofRequestTemplate(
     val id: String,
     val name: String,
     val imageDataUrl: String = ""

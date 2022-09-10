@@ -4,11 +4,18 @@ import org.keycloak.KeycloakSecurityContext
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 
+
 @Controller
+@RequestMapping(LogoutController.BASE_URL)
 class LogoutController {
+    companion object {
+        const val BASE_URL = "/app/logout"
+    }
+
     /**
      * Makes SSO Logout.
      * This endpoint has to be private. Otherwise, there will be no token to send logout to KeyCloak.
@@ -17,7 +24,7 @@ class LogoutController {
      * @return redirect to index page
      * @throws ServletException if tomcat session logout throws exception
      */
-    @GetMapping("/logout")
+    @GetMapping("")
     @Throws(ServletException::class)
     fun logout(request: HttpServletRequest): String {
         keycloakSessionLogout(request)

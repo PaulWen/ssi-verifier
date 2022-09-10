@@ -1,4 +1,4 @@
-<turbo-stream action="update" target="content">
+<turbo-stream action="update" target="result">
     <template>
         <style>
             :root {
@@ -63,20 +63,20 @@
         </svg>
 
         <div class="card px-3 py-3 col-10 mx-auto">
-            <div class="my-2" th:if="${!verifiedProof.presentation.credentialAttributes.isEmpty()}">
+            <div class="my-2" th:if="${!verifiedProofExchange.presentation.credentialAttributes.isEmpty()}">
                 <h4>Credential Attributes</h4>
                 <table class="mx-3 my-3">
-                    <tr th:each="credentialAttribute : ${verifiedProof.presentation.credentialAttributes}">
+                    <tr th:each="credentialAttribute : ${verifiedProofExchange.presentation.credentialAttributes}">
                         <td><strong th:text="${credentialAttribute.key}">keyasdfasdf</strong></td>
                         <td class="px-4" th:text="${credentialAttribute.value}">value</td>
                     </tr>
                 </table>
             </div>
 
-            <div class="my-2" th:if="${!verifiedProof.presentation.selfAttestedAttributes.isEmpty()}">
+            <div class="my-2" th:if="${!verifiedProofExchange.presentation.selfAttestedAttributes.isEmpty()}">
                 <h4>Self Attested Attributes</h4>
                 <table class="mx-3 my-3">
-                    <tr th:each="selfAttestedAttribute : ${verifiedProof.presentation.selfAttestedAttributes}">
+                    <tr th:each="selfAttestedAttribute : ${verifiedProofExchange.presentation.selfAttestedAttributes}">
                         <td><strong th:text="${selfAttestedAttribute.key}">key</strong></td>
                         <td class="px-4" th:text="${selfAttestedAttribute.value}">value</td>
                     </tr>

@@ -2,7 +2,7 @@ package com.ssi.verifier.inbound.acapy
 
 import com.google.gson.Gson
 import com.ssi.verifier.application.ProofExchangeInteractor
-import com.ssi.verifier.domain.models.VerifiedProofDo
+import com.ssi.verifier.domain.models.VerifiedProofExchange
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.hyperledger.aries.api.present_proof.PresentationExchangeRecord
@@ -60,7 +60,7 @@ class AcaPyWebhookController(
         override fun handleProof(proof: PresentationExchangeRecord) {
             if (proof.errorMsg != null) {
                 proofExchangeInteractor.verifiedProof(
-                    VerifiedProofDo(
+                    VerifiedProofExchange(
                         proof.presentationExchangeId,
                         false
                     )
@@ -70,7 +70,7 @@ class AcaPyWebhookController(
 
             if (proof.roleIsVerifierAndVerified()) {
                 proofExchangeInteractor.verifiedProof(
-                    VerifiedProofDo(
+                    VerifiedProofExchange(
                         proof.presentationExchangeId,
                         proof.verified,
                         gson.fromJson(proof.presentation.get("requested_proof"), PresentationAcaPy::class.java).toDo(proof.presentationRequest.requestedPredicates.values.toList())

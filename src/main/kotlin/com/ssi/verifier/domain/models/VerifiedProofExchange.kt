@@ -1,16 +1,16 @@
 package com.ssi.verifier.domain.models
 
-data class VerifiedProofDo(
+data class VerifiedProofExchange(
     val id: String,
     val isValid: Boolean,
-    val presentation: PresentationDo? = null
+    val presentation: Presentation? = null
 )
 
-data class PresentationDo(
+data class Presentation(
     val credentialAttributes: Map<String, String>,
     val selfAttestedAttributes: Map<String, String>,
 )
 
-data class RequestedProofRevealedAttrGroupDo(
+data class RequestedProofRevealedAttrGroup(
     val values: Map<String, String>
 )

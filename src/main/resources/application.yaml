@@ -1,5 +1,7 @@
 server:
   port: 9080
+  error:
+    include-stacktrace: never
 
 spring:
   application:
@@ -7,6 +9,13 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher # required for the Swagger UI to work
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:5432/controller
+    username: controller
+    password: controller
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 keycloak:
   enabled: false

@@ -4,6 +4,7 @@ import com.ssi.verifier.application.ProofExchangeInteractor
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.servlet.view.RedirectView
 
 @Controller
 class IndexController(
@@ -12,11 +13,12 @@ class IndexController(
 ) {
 
     @GetMapping("/")
-    fun index(model: Model): String {
-        val proofRequestTemplates = proofExchangeInteractor.allProofRequestTemplates()
+    fun index(model: Model): RedirectView {
+        return RedirectView(EditorController.BASE_URL)
+    }
 
-        model.addAttribute("proofRequestTemplates", proofRequestTemplates)
-
-        return "index"
+    @GetMapping("/app")
+    fun appIndex(model: Model): RedirectView {
+        return RedirectView(EditorController.BASE_URL)
     }
 }

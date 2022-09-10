@@ -1,5 +1,25 @@
 version: "3.7"
 services:
+  ssi-verifier-controller-db:
+    container_name: ssi-verifier-controller-db
+    image: ${POSTGRES_IMAGE}
+    ports:
+      - "5432:5432"
+    volumes:
+      - controller-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${CONTROLLER_DB_DATABASE_NAME}
+      POSTGRES_USER: ${CONTROLLER_DB_USER}
+      POSTGRES_PASSWORD: ${CONTROLLER_DB_PASSWORD}
+    networks:
+      - ssi-verifier-network
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "50m"
+    restart: always
+
   ssi-verifier-acapy-db:
     container_name: ssi-verifier-acapy-db
     image: ${POSTGRES_IMAGE}
@@ -50,7 +70,7 @@ services:
         --auto-ping-connection \
         --auto-verify-presentation \
         --log-level INFO \
-        --webhook-url http://host.docker.internal:9080/api/acapy-webhook#${SSI_VERIFIER_WEBHOOK_API_KEY}
+        --webhook-url http://host.docker.internal:9080/api/acapy-webhook#${CONTROLLER_WEBHOOK_API_KEY}
       "
     ]
     networks:
@@ -127,3 +147,4 @@ networks:
 volumes:
   acapy-db:
   keycloak-db:
+  controller-db:

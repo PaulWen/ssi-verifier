@@ -5,6 +5,10 @@ spring:
     resources:
       chain:
         cache: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/controller
+    username: controller
+    password: controller
 
 keycloak:
   auth-server-url: http://keycloak.lissi-cloud.localhost:8080/auth
