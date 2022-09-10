@@ -6,30 +6,67 @@
 <body>
 <main class="my-5 mx-2" layout:fragment="content">
     <turbo-frame id="content">
-        <turbo-stream-connection th:src="'/proof-exchange/' + ${connectionlessProofRequest.exchangeId}"
-                                 debug="false"></turbo-stream-connection>
-
-        <turbo-frame id="result">
-            <div class="container">
-                <h2 th:text="${proofRequestTemplateName}">Connectionless Proof Request</h2>
-                <div id="content">
-                    <img th:src="${connectionlessProofRequest.qrCodeDataUrlEncoded}"
-                         style="width: 100%; max-width: 400px; margin: 10px auto; display: block"></img>
-                </div>
-            </div>
-        </turbo-frame>
-
         <div class="container">
+            <h2>Connectionless Proof Request</h2>
+
+            <div class="row my-2 px-3 justify-content-end">
+                <a type="button" class="btn btn-primary ml-2"
+                   th:href="'/app/editor/' + ${proofTemplateId}"
+                   data-turbo-action="advance"
+                   title="Edit the Proof Template">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+                <button type="button" class="btn btn-primary ml-2"
+                        data-bs-toggle="modal" data-bs-target="#shareModal"
+                        title="Share the Proof Template">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+            </div>
+
+            <turbo-stream-connection th:src="'/proof-exchange/' + ${connectionlessProofRequest.exchangeId}"
+                                     debug="false"></turbo-stream-connection>
+
+            <turbo-frame id="result">
+                <div class="container">
+                    <div id="content">
+                        <img th:src="${connectionlessProofRequest.qrCodeDataUrlEncoded}"
+                             style="width: 100%; max-width: 400px; margin: 10px auto; display: block"></img>
+                    </div>
+                </div>
+            </turbo-frame>
+
             <div class="row justify-content-center">
                 <a class="btn btn-primary btn-block mx-5 my-2"
                    th:href="'/app/proof-exchange/' + ${proofTemplateId}">
                     Generate New Proof Request
                 </a>
             </div>
-            <div class="row justify-content-center">
-                <a class="btn btn-secondary btn-block mx-5 my-2"
-                   th:href="'/app/editor/' + ${proofTemplateId}"
-                   data-turbo-action="advance">Close</a>
+        </div>
+
+        <div class="modal fade" id="shareModal" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLongTitle">Share the Proof Template</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            To share the proof template with other users use the following link:<br/>
+                            <code>http://localhost:9080/app/proof-exchange/29ca4ba4-ec63-4730-946c-14c3d63dab28</code>
+                        </p>
+                        <p>
+                            Note that this will NOT share any proof presentation results.
+                        </p>
+                        <p>
+                            This proof template will never change as editing the proof template will
+                            automatically generate a new proof template.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </turbo-frame>

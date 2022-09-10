@@ -7,12 +7,18 @@
 <main class="my-5 mx-2" layout:fragment="content">
     <turbo-frame id="content">
         <div class="container">
-            <h2>Enter an AnonCreds Proof Request</h2>
+            <h2>Create a Proof Template</h2>
 
             <div class="row my-2 px-3 justify-content-end">
                 <button class="btn btn-primary"
-                        onclick="beautifyJson()">
+                        onclick="beautifyJson()"
+                        title="Reformat JSON">
                     Beautify JSON
+                </button>
+                <button type="button" class="btn btn-primary ml-2"
+                        data-bs-toggle="modal" data-bs-target="#infoModal"
+                        title="Infos about the Proof Template Syntax">
+                    <i class="fa-solid fa-circle-info"></i>
                 </button>
             </div>
 
@@ -39,17 +45,49 @@
                            data-turbo-action="advance">
                 </div>
                 <div class="row justify-content-center">
-                    <button class="btn btn-secondary btn-block mx-5 my-2" onclick=clearJsonEditor()>Clear Editor
-                    </button>
+                    <a class="btn btn-secondary btn-block mx-5 my-2" href="/app/editor"
+                       data-turbo-action="advance">
+                        New Proof Template
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLongTitle">Proof Templates</h4>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Syntax</h5>
+                        <p>
+                            Proof templates are defined following the AnonCreds Proof Request syntax. Only the
+                            attributes <code>requested_attributes</code> and <code>requested_predicates</code>
+                            can be customized. Other attributes will be ignored.
+                        </p>
+                        <p>
+                            A random <code>nonce</code> will be automatically generated with every new proof
+                            request.
+                        </p>
+
+                        <hr/>
+
+                        <h5>Data Privacy</h5>
+                        <p>
+                            To be able to share proof templates with other users all proof templates are
+                            publicly available and should not include any secrets.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <script>
-            function clearJsonEditor() {
-                document.getElementById('jsonEditor').value = "{}";
-            }
-
             function beautifyJson() {
                 const jsonErrorsAlert = document.getElementById('jsonErrors')
 

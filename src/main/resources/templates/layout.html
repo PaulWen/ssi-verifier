@@ -7,7 +7,7 @@
 
     <!-- Font Awesome -->
     <link
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
             rel="stylesheet"
     />
     <!-- Google Fonts -->
@@ -43,7 +43,7 @@
         </div>
         <ul class="navbar-nav d-flex flex-row">
             <li class="nav-item me-3 me-lg-0">
-                <a class="nav-link" href="/logout" data-toggle="tooltip" data-placement="bottom" title="Logout">
+                <a class="nav-link" href="/logout" title="Logout">
                     <i class="fa-solid fa-lg fa-arrow-right-from-bracket text-secondary"></i>
                 </a>
             </li>
@@ -54,15 +54,6 @@
 
 <main layout:fragment="content">
 </main>
-
-<script>
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'))
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-</script>
-
-
 </body>
 </html>
 
