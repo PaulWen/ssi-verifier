@@ -11,7 +11,15 @@ data class NewProofTemplate(
 data class ProofTemplate(
     val id: ProofTemplateId,
     val proofRequestTemplate: AnonCredsProofRequestTemplate
-)
+) {
+    fun hasIdenticalProofRequest(otherProofRequestTemplate: AnonCredsProofRequestTemplate): Boolean {
+        val gson = GsonBuilder().serializeNulls().create()
+        val thisProofRequest = gson.fromJson(proofRequestTemplate.value, JsonObject::class.java)
+        val otherProofRequest = gson.fromJson(otherProofRequestTemplate.value, JsonObject::class.java)
+
+        return thisProofRequest.equals(otherProofRequest)
+    }
+}
 
 data class ProofTemplateId(
     val value: String

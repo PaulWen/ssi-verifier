@@ -20,25 +20,15 @@
                 <div class="alert alert-danger w-100 d-none" id="jsonErrors"></div>
             </div>
 
-            <form method="POST" action="/app/editor/save-proof-request-and-show-connectionless-proof-request"
+            <form method="POST" th:action="${saveAction}"
                   id="proofRequestForm">
             </form>
 
             <div class="row my-2 px-3">
-            <textarea class="form-control" id="jsonEditor" rows=16 form="proofRequestForm" name="proofRequestJson">
-                {
-                    "requested_attributes": {
-                      "Name": {
-                        "name": "Name",
-                        "restrictions": []
-                      },
-                      "Age": {
-                        "name": "Age",
-                        "restrictions": []
-                      }
-                    },
-                    "requested_predicates": {}
-                }
+            <textarea class="form-control" id="jsonEditor" rows=16 form="proofRequestForm" name="proofRequestJson"
+                      th:text="${proofRequestJson}"
+            >
+                {}
             </textarea>
             </div>
 

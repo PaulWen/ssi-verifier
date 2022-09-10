@@ -19,25 +19,6 @@ class ProofTemplateInteractor(
     }
 
     fun getProofTemplate(proofTemplateId: ProofTemplateId): ProofTemplate {
-        val proofRequestJsonSample = """
-            {
-                "name": "Self-Attested",
-                "version": "1.0",
-                "requested_attributes": {
-                  "self-attested-1": {
-                    "name": "Name",
-                    "restrictions": []
-                  },
-                  "self-attested-2": {
-                    "name": "Age",
-                    "restrictions": []
-                  }
-                },
-                "requested_predicates": {},
-                "nonce": "742995230032692452171111"
-            }
-        """
-
         return proofTemplateRepo.getProofTemplate(proofTemplateId)
     }
 

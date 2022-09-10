@@ -29,6 +29,7 @@ class ProofExchangeController(
 
         val connectionlessProofRequest = proofExchangeInteractor.newConnectionlessProofRequest(proofTemplate)
 
+        model.addAttribute("proofTemplateId", proofTemplateId)
         model.addAttribute("connectionlessProofRequest", connectionlessProofRequest)
 
         return "proof-exchange/connectionless-proof-request"
