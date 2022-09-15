@@ -2,8 +2,6 @@ server:
   port: 9080
   error:
     include-stacktrace: never
-    whitelabel:
-      enabled: false
 
 spring:
   application:
