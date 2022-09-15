@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 class ProofExchangeController(
     private val proofExchangeInteractor: ProofExchangeInteractor,
     private val proofTemplateInteractor: ProofTemplateInteractor
-) {
+) : AbstractAppController() {
     companion object {
         const val BASE_URL = "/app/proof-exchange"
     }

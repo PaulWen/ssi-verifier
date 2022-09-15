@@ -9,8 +9,7 @@ import org.springframework.web.servlet.view.RedirectView
 @Controller
 class IndexController(
     private val proofExchangeInteractor: ProofExchangeInteractor
-
-) {
+) : AbstractAppController() {
 
     @GetMapping("/")
     fun index(model: Model): RedirectView {

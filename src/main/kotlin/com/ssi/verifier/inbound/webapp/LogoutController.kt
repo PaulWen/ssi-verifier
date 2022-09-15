@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest
 
 @Controller
 @RequestMapping(LogoutController.BASE_URL)
-class LogoutController {
+class LogoutController : AbstractAppController() {
     companion object {
         const val BASE_URL = "/app/logout"
     }

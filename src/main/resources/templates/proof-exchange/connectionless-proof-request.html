@@ -18,7 +18,7 @@
                 </a>
                 <button type="button" class="btn btn-primary ml-2"
                         data-bs-toggle="modal" data-bs-target="#shareModal"
-                        onclick="updateUrl()"
+                        onclick="updateUrlToShareProofTemplate()"
                         title="Share the Proof Template">
                     <i class="fa-solid fa-share-nodes"></i>
                 </button>
@@ -49,14 +49,14 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLongTitle">Share the Proof Template</h4>
+                        <h4 class="modal-title" id="exampleModalLongTitle">Share this Proof Template</h4>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <p>
-                            To share the proof template with other users use the following link:<br/>
+                            To share this proof template with other users use the following link:<br/>
                             <code id="shareUrl"></code>
                         </p>
                         <p>
@@ -72,7 +72,7 @@
         </div>
 
         <script>
-            function updateUrl() {
+            function updateUrlToShareProofTemplate() {
                 document.getElementById("shareUrl").innerHTML = window.location.href;
             }
         </script>

@@ -18,8 +18,7 @@ import org.springframework.web.servlet.view.RedirectView
 @RequestMapping(EditorController.BASE_URL)
 class EditorController(
     private val proofTemplateInteractor: ProofTemplateInteractor
-
-) {
+) : AbstractAppController() {
 
     companion object {
         const val BASE_URL = "/app/editor"
