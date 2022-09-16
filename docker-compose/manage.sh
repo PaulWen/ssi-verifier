@@ -35,7 +35,7 @@ function start() {
       exit 2
   fi
 
-  echo "Generating random DID seed and registering DID to ledger..."
+  echo "Generating random DID seed ..."
   export ACAPY_DID_SEED=$(cat /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
   echo "Starting SSI-Verifier System ..."
