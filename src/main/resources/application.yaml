@@ -16,6 +16,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    open-in-view: false
 
 keycloak:
   enabled: false
