@@ -10,12 +10,6 @@
             <h2>Connectionless Proof Request</h2>
 
             <div class="row my-2 px-3 justify-content-end">
-                <a type="button" class="btn btn-primary ml-2"
-                   th:href="'/app/editor/' + ${proofTemplateId}"
-                   data-turbo-action="advance"
-                   title="Edit the Proof Template">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
                 <button type="button" class="btn btn-primary ml-2"
                         data-bs-toggle="modal" data-bs-target="#shareModal"
                         onclick="updateUrlToShareProofTemplate()"
@@ -40,6 +34,13 @@
                 <a class="btn btn-primary btn-block mx-5 my-2"
                    th:href="'/app/proof-exchange/' + ${proofTemplateId}">
                     Generate New Proof Request
+                </a>
+            </div>
+            <div class="row justify-content-center">
+                <a class="btn btn-secondary btn-block mx-5 my-2"
+                   th:href="'/app/editor/' + ${proofTemplateId}"
+                   data-turbo-action="advance">
+                    Edit Proof Template
                 </a>
             </div>
         </div>
