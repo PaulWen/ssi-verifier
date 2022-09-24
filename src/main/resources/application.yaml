@@ -34,20 +34,6 @@ management:
       exposure:
         include: health,info,prometheus
 
-keycloak:
-  enabled: false
-  auth-server-url: https://lissi-cloud-dev.westeurope.cloudapp.azure.com/auth
-  realm: lissi-cloud
-  resource: postman
-  public-client: true
-  securityConstraints:
-    - authRoles: [ "lissi_manager" ]
-      securityCollections:
-        - patterns: [ "/*" ]
-    - authRoles: [ ]
-      securityCollections:
-        - patterns: [ "/api/acapy-webhook/topic/*", "/stomp" ]
-
 acapy:
   url: http://ssi-verifier-acapy:10000
   http-timeout-in-seconds: 60

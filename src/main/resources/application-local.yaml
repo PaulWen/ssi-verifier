@@ -17,9 +17,6 @@ logging:
     org.springframework.web: INFO
     org.hibernate: INFO
 
-keycloak:
-  auth-server-url: http://keycloak.lissi-cloud.localhost:8080/auth
-
 acapy:
   url: http://localhost:10000
   api-key:
