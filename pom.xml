@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.ssiverivier</groupId>
     <artifactId>ssi-verifier</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.5</version>
     <name>SSI Verifier</name>
     <description>SSI Verifier</description>
     <properties>
