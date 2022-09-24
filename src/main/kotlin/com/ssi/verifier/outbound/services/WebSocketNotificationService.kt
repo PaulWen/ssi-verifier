@@ -1,5 +1,6 @@
 package com.ssi.verifier.outbound.services
 
+import com.ssi.verifier.AppLogger
 import com.ssi.verifier.domain.models.VerifiedProofExchange
 import com.ssi.verifier.domain.services.NotificationService
 import org.springframework.messaging.simp.SimpMessagingTemplate
@@ -10,9 +11,10 @@ import org.thymeleaf.spring5.SpringTemplateEngine
 @Service
 class WebSocketNotificationService(
     private val wsService: SimpMessagingTemplate,
-    private val templateEngine: SpringTemplateEngine
-) : NotificationService {
-    override fun validProofExchangeUpdate(verifiedProofExchange: VerifiedProofExchange) {
+    private val templateEngine: SpringTemplateEngine,
+    logger: AppLogger
+) : NotificationService(logger) {
+    override fun handleValidProofExchangeUpdate(verifiedProofExchange: VerifiedProofExchange) {
         val context = Context()
         context.setVariable("verifiedProofExchange", verifiedProofExchange)
         val htmlUpdate = templateEngine.process("proof-exchange/valid-proof-exchange-result", context)
@@ -20,7 +22,7 @@ class WebSocketNotificationService(
         wsService.convertAndSend("/proof-exchange/${verifiedProofExchange.id}", htmlUpdate)
     }
 
-    override fun invalidProofExchangeUpdate(verifiedProofExchange: VerifiedProofExchange) {
+    override fun handleInvalidProofExchangeUpdate(verifiedProofExchange: VerifiedProofExchange) {
         val context = Context()
         val htmlUpdate = templateEngine.process("proof-exchange/invalid-proof-exchange-result", context)
 

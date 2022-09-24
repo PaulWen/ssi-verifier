@@ -1,5 +1,6 @@
-package com.ssi.verifier.inbound.webapp
+package com.ssi.verifier.inbound.webapp.controller
 
+import com.ssi.verifier.AppLogger
 import com.ssi.verifier.application.ProofTemplateInteractor
 import com.ssi.verifier.domain.models.AnonCredsProofRequestTemplate
 import com.ssi.verifier.domain.models.NewProofTemplate
@@ -17,8 +18,9 @@ import org.springframework.web.servlet.view.RedirectView
 @Controller
 @RequestMapping(EditorController.BASE_URL)
 class EditorController(
-    private val proofTemplateInteractor: ProofTemplateInteractor
-) : AbstractAppController() {
+    private val proofTemplateInteractor: ProofTemplateInteractor,
+    logger: AppLogger
+) : AbstractAppController(logger) {
 
     companion object {
         const val BASE_URL = "/app/editor"
@@ -42,7 +44,7 @@ class EditorController(
             }
         """
 
-        model.addAttribute("saveAction", "${BASE_URL}/save-proof-request-and-show-connectionless-proof-request")
+        model.addAttribute("saveAction", "$BASE_URL/save-proof-request-and-show-connectionless-proof-request")
         model.addAttribute("proofRequestJson", sampleProofRequestJson)
         return "editor"
     }
@@ -54,7 +56,7 @@ class EditorController(
     ): String {
         val proofTemplate = proofTemplateInteractor.getProofTemplate(ProofTemplateId(proofTemplateId))
 
-        model.addAttribute("saveAction", "${BASE_URL}/$proofTemplateId/update-proof-request-and-show-connectionless-proof-request")
+        model.addAttribute("saveAction", "$BASE_URL/$proofTemplateId/update-proof-request-and-show-connectionless-proof-request")
         model.addAttribute("proofRequestJson", proofTemplate.proofRequestTemplate.value)
 
         return "editor"

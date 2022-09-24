@@ -16,7 +16,16 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQL10Dialect
     open-in-view: false
+
+logging:
+  level:
+    root: WARN
+    com.ssi.verifier: INFO
+    org.springframework.web: WARN
+    org.hibernate: ERROR
 
 keycloak:
   enabled: false

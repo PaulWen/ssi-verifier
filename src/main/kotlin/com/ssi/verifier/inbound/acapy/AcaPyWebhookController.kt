@@ -1,10 +1,12 @@
 package com.ssi.verifier.inbound.acapy
 
 import com.google.gson.Gson
+import com.ssi.verifier.AppLogger
 import com.ssi.verifier.application.ProofExchangeInteractor
 import com.ssi.verifier.domain.models.VerifiedProofExchange
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
+import org.hyperledger.aries.api.message.ProblemReport
 import org.hyperledger.aries.api.present_proof.PresentationExchangeRecord
 import org.hyperledger.aries.webhook.EventHandler
 import org.springframework.beans.factory.annotation.Value
@@ -20,10 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody
 @Controller
 @RequestMapping("/api/acapy-webhook")
 class AcaPyWebhookController(
-    proofExchangeInteractor: ProofExchangeInteractor,
+    private val proofExchangeInteractor: ProofExchangeInteractor,
+    private val logger: AppLogger,
     @Value("\${acapy.webhook-api-key}") private val webhookApiKey: String
 ) {
-    private val acaPyEventHandler = AcaPyEventHandler(proofExchangeInteractor)
+    private val acaPyEventHandler = AcaPyEventHandler(proofExchangeInteractor, logger)
     private val log: Log = LogFactory.getLog(AcaPyWebhookController::class.java)
 
     private val X_API_KEY = "x-api-key"
@@ -54,11 +57,14 @@ class AcaPyWebhookController(
 
     private class AcaPyEventHandler(
         private val proofExchangeInteractor: ProofExchangeInteractor,
+        private val logger: AppLogger
     ) : EventHandler() {
         var gson = Gson()
 
         override fun handleProof(proof: PresentationExchangeRecord) {
             if (proof.errorMsg != null) {
+                logger.acaPyWebhookError("present_proof", proof.errorMsg)
+
                 proofExchangeInteractor.verifiedProof(
                     VerifiedProofExchange(
                         proof.presentationExchangeId,
@@ -67,6 +73,9 @@ class AcaPyWebhookController(
                 )
                 return
             }
+
+            logger.acaPyWebhook("present_proof", proof.presentationExchangeId, proof.connectionId
+                ?: "connectionless", proof.state.toString(), proof.isVerified)
 
             if (proof.roleIsVerifierAndVerified()) {
                 proofExchangeInteractor.verifiedProof(
@@ -77,6 +86,10 @@ class AcaPyWebhookController(
                     )
                 )
             }
+        }
+
+        override fun handleProblemReport(report: ProblemReport?) {
+            logger.acaPyWebhookError("problem_report", report.toString())
         }
 
     }

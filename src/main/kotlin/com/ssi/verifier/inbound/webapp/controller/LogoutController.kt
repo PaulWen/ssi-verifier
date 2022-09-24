@@ -1,5 +1,6 @@
-package com.ssi.verifier.inbound.webapp
+package com.ssi.verifier.inbound.webapp.controller
 
+import com.ssi.verifier.AppLogger
 import org.keycloak.KeycloakSecurityContext
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext
 import org.springframework.stereotype.Controller
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletRequest
 
 @Controller
 @RequestMapping(LogoutController.BASE_URL)
-class LogoutController : AbstractAppController() {
+class LogoutController(
+    logger: AppLogger
+) : AbstractAppController(logger) {
     companion object {
         const val BASE_URL = "/app/logout"
     }

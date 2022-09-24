@@ -1,5 +1,6 @@
-package com.ssi.verifier.inbound.webapp
+package com.ssi.verifier.inbound.webapp.controller
 
+import com.ssi.verifier.AppLogger
 import com.ssi.verifier.application.ProofExchangeInteractor
 import com.ssi.verifier.application.ProofTemplateInteractor
 import com.ssi.verifier.domain.models.ProofTemplateId
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 @RequestMapping(ProofExchangeController.BASE_URL)
 class ProofExchangeController(
     private val proofExchangeInteractor: ProofExchangeInteractor,
-    private val proofTemplateInteractor: ProofTemplateInteractor
-) : AbstractAppController() {
+    private val proofTemplateInteractor: ProofTemplateInteractor,
+    logger: AppLogger
+) : AbstractAppController(logger) {
     companion object {
         const val BASE_URL = "/app/proof-exchange"
     }
