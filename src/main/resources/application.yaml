@@ -27,6 +27,13 @@ logging:
     org.springframework.web: WARN
     org.hibernate: ERROR
 
+# Configure Actuator and Micrometer
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
 keycloak:
   enabled: false
   auth-server-url: https://lissi-cloud-dev.westeurope.cloudapp.azure.com/auth
