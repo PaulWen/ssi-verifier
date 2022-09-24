@@ -32,7 +32,9 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,prometheus
+        include: prometheus
+  server:
+    port: 8080
 
 acapy:
   url: http://ssi-verifier-acapy:10000
