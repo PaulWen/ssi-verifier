@@ -9,7 +9,7 @@ class AppLogger {
     var logger: Logger = LoggerFactory.getLogger(AppLogger::class.java)
 
     fun springHandledException(uri: String, httpMethod: String, statusCode: Int, message: String) {
-        logger.error("type=spring_handled_exception url=$uri httpMethod=$httpMethod statusCode=$statusCode message=\"$message\"")
+        logger.error("type=spring_handled_exception uri=$uri httpMethod=$httpMethod statusCode=$statusCode message=\"$message\"")
     }
 
     fun webApp(
@@ -51,7 +51,7 @@ class AppLogger {
         logger.error("type=acapy_webhook_error topic=$topic message=\"$message\"")
     }
 
-    fun notificationSerivce(topic: String, message: String) {
+    fun notificationService(topic: String, message: String) {
         logger.info("type=notification_service topic=$topic message=$message")
     }
 }
