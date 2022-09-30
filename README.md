@@ -1,106 +1,132 @@
-# SSI Verifier
+<p align="center">
+  <img
+    alt="SSI Verifier logo"
+    src="./images/logo_black.png"
+  />
+</p>
 
-A simple SSI verifier app that integrates with the Lissi Agent.
+---
 
-## Run Locally
+## 🌈 Table of Contents
 
-- activate the spring profile `local` to ensure that Thymeleaf templates are not
-  cached
-- ensure that your application is rebuild after saving (e.g. using Save Actions
-  for IntelliJ) to ensure that changes take effect immediately without requiring
-  a manual restart of the application
-- add the webhook URL when starting the
-  AcaPy `--webhook-url 'http://host.docker.internal:8888/api/acapy-webhook#secret-key' \`
+- [✅ Features](#-features)
+- [🚀 Try it!](#-try-it)
+- [🗓 Roadmap](#-roadmap)
+- [✉️ Stay Updated](#%EF%B8%8F-stay-updated)
+- [✏️ Contribute](#%EF%B8%8F-contribute)
+- [❤️ Family and Friends](#%EF%B8%8F-family-and-friends)
+- [🧐 FAQ](#-faq)
 
-## Build and Run Docker Container
+## ✅ Features
 
-### Build and Run Docker Container Locally
+### Open Source
 
-```
-docker build -t ssi-verifier .
- 
-docker run -p 8888:8080 --name ssi-verifier ssi-verifier
-```
+The SSI Verifier is completely open-source. Feel free to contribute, request features, or deploy your own instance.
 
-### Run Pre-Build Docker Container
+### Privacy Preserving
 
-```
-docker run -p 8888:8080 --name ssi-verifier ghcr.io/paulwen/ssi-verifier:latest
-```
+Presentations of credentials are highly sensitive data. Therefore, we immediately forward the data to the verifier
+who requested the presentation and do not store it in the application itself.
 
-## Helm Deployment
+### SSI Standard Agnostic
 
-The [Helm chart](./k8s) can be used to deploy the SSI-Verifier app to a K8s
-cluster.
+The SSI Verifier aims to support a variety of SSI credential formats like AnonCreds, JWT Credentials, and BBS+/JSON-LD Credentials. focuses on connectionless proof requests of any
+type of verifiable credential.
 
-### Configuration
+### Integrated UI and Optimized for Mobile Devices
 
-As outlined in the [values.yaml](./k8s/values.yaml) the following configuration
-is required:
+The SSI Verifier comes with a UI that allows one to use the SSI Verifier without requiring any integration
+into the own systems. Moreover, the UI is optimized for mobile devices. In case you want to verify credentials on the go
+using your smartphone you now have the chance.
 
-- `ssiVerifier.keycloakUrl`: URL to the Keycloak to authenticate the user and
-  get access to the API of the Lissi Agent instance (e.g.
-  "https://<DOMAIN>/auth")
-- `ssiVerifier.lissiAgentApiUrl`: URL to the API of the Lissi Agent instance
-  (e.g.
-  "https:/<DOMAIN>/ctrl/api/v1.0")
-- `ssiVerifier.tenantId`: The ID of the tenant of the Lissi Agent instance
-  (e.g. "default_tenant")
-- `ssiVerifier.k8sSecretRef`: The name of the K8s secret - see below  (e.g.
-  "ssi-verifier")
+### Many APIs
 
-### Secret
+To integrate the SSI Verifier into you existing systems a variety of API interfaces exist:
 
-- `webhookApiKey`: The API key used to authenticate the webhook calls from the
-  AcaPy instance
+- **HTTP API**: Generate new proof requests based on existing proof templates and show them to your user in your own application or even in an email.
+- **Webhook and WebSocket Interfaces**: Be notified whenever a new presentation arrives.
+- **Open ID Connect Identity Provider (OIDC IdP):** Authenticate and authorize users based on verifiable credentials.
 
-## Release Process
+## 🚀 Try it!
 
-1. Update version in [pom.xml](./pom.xml)
-1. Update app version in [Chart.yaml](./k8s/Chart.yaml)
-2. Add a tag `X.X.X`
-3. The [GitHub Action](./.github/workflows/docker-publish.yml) will
-   automatically build and publish a new docker image
+Feel free to try out the SSI Verifier here: https://app.ssi-verifier.com
 
-## Technical Debt
+![iPhone Screens](./images/screens_overview.png)
 
-- WebSockets mit authorization Header absichern, damit nicht jeder subscriben
-  kann -> not super critical as clients need to subscribe to changes for
-  particular proof exchange IDs and those are hard to guess
-- Socket stream html element sollte nur eine Connection aufbauen und dann zu
-  vielen topics subscriben anstatt jedes Mal eine neue Connection aufzubauen
+As an SSI wallet we recommend using the [Lissi Wallet](https://lissi.id).
 
-## Next Steps
+## 🗓 Roadmap
 
-- introduce a default error page
-- integrate an URL shortener
-- investigate why a user needs to log-in twice after logging out
-- WebSocket connection is being lost sometimes and no proof request results are being delivered - maybe the WebSocket HTTP connection times out after one minute or less
+### SSI Standards
 
-- store proof request results to an in-memory database to not only share the result via a WebSocket event but also after refreshing the page
-- clean up the database every 15 minutes and all database entries expire after
-  15 minutes
-- selecting a proof request template generates a new connectionless proof
-  request and redirects the user to that (proof exchange ID instead of proof
-  request template ID is shown in the URL bar)
-    - allows to reload the page to see if an result already arrived (e.g. in
-      case the Websocket connection failed)
-    - ensures that no green tick is rendered temporarily when the same proof
-      template is requested twice and the green tick is still cached
-- show a refresh button below the QR Code
+| Feature                             | Status | Description                                                                                                           |
+|-------------------------------------|:------:|-----------------------------------------------------------------------------------------------------------------------|
+| AnonCreds + Aries RFC 0037 and 0056 |   ✅    | Request AnonCreds and self-attested attributes using connectionless proof requests and the Present Proof Protocol 1.0 |
+| AnonCreds + Aries RFC 0454 and 0434 |   🚧   | Request AnonCreds and self-attested attributes using out-of-band (OOB) messages and the Present Proof Protocol 2.0    |
+| BBS+/JSON-LD Credentials            |        | Request BBS+ credentials using out-of-band (OOB) messages and the Present Proof Protocol 2.0                          |
+| JWT Credentials                     |        | Request JWT Credentials                                                                                               |
 
-- render data URL claim values as links
+### APIs
 
-## Out of Scope
+| Feature      | Status | Description                                                                    |
+|--------------|:------:|--------------------------------------------------------------------------------|
+| WebSockets   |  ✅    | Be notified about new presentation results via WebSocket STOMP connections     |
+| HTTP API     |   🚧   | Manage proof templates and create new proof requests to show to holders        |
+| Webhooks     |        | Be notified about new presentation results via Webhooks                        |
+| OIDC IdP     |        | Integrate the SSI Verifier as an  Open ID Connect Identity Provider (OIDC IdP) |
 
-- dynamically connect to any Lissi Agent instance by providing the domain of the
-  Lissi Agent
-    - comes along with various security concerns as the same verifier instance
-      suddenly handels data from many SSI agents
-    - to ensure proper data isolation a new SSI verifier instance should be
-      deployed for each Lissi Agent instance
+### Web App
 
-## Theming
+| Feature                                           |  Status  | Description                                                                                                                                |
+|---------------------------------------------------|:--------:|--------------------------------------------------------------------------------------------------------------------------------------------|
+| JSON Editor for Proof Templates                   |    ✅     | Edit proof templates in JSON format                                                                                                        |
+| Visualize Proof Requests as QR Codes              |    ✅     | Show proof requests in the form of a QR code that holders can scan using their SSI wallet                                                  |
+| Show the Result of a Proof Request                |    ✅     | Show the validated presentation including all credential attributes as well as self-attested attributes                                    |
+| Share Proof Templates                             |    ✅     | Share proof templates with other users of the SSI Verifier so that they can generate the same kind of proof requests                       |
+| Define new Proof Templates based on existing ones |    ✅     | Editing an existing proof template will not overwrite it but create a new proof template to ensure that the old version continues to exist |
+| Form-based Editor for Proof Templates             |         | Edit proof templates using a guided editor                                                                                                 |
+| User Accounts                                     |         | Introduces user accounts to create private proof templates that can optionally be shared with other users                                   |
+| Groups                                            |         | Invite multiple users into a group to share proof templates between them                                                                   |
+| Group Admins                                      |         | Only group admins can invite users to a group and manage the proof templates of the group                                                  |
 
-Bootstrap is used as the UI library. To generate and export a custom theme
-the free [Bootstrap Builder](https://bootstrap.build/app/projects) is being used.
+### Other Features
+
+| Feature       |  Status  | Description                                                                                   |
+|---------------|:--------:|-----------------------------------------------------------------------------------------------|
+| URL Shortener |         | A URL shortener to shorten the URL encoded proof requests to make the QR codes easier to scan |
+
+## ✉️ Stay Updated
+
+We are working to make everything about the verification of SSI credentials easy. To stay up-to-date with the latest
+developments [drop us an email](mailto:hello@ssi-verifier.com?subject=SSI Verifier Mailing List ) and
+we will put you on the mailing list. Don't worry, we won't spam you and you can unsubscribe at any time.
+
+## ✏️ Contribute
+
+Everyone is welcome to contribute. Feel free to request a feature or open a pull request.
+
+## ❤️ Family and Friends
+
+This project would not be possible without [AcaPy](https://github.com/hyperledger/aries-cloudagent-python) a big thank you to
+all [AcaPy contributors](https://github.com/hyperledger/aries-cloudagent-python/graphs/contributors)!
+
+## 🧐 FAQ
+
+### What is used to build the SSI Verifier?
+
+The SSI Verifier is a Spring Boot application with a server-side rendered web application. To offer a SPA-like user experience [Hotwire](https://hotwired.dev/) is leveraged. To create proof
+requests and verify presentations the [AcaPy](https://github.com/hyperledger/aries-cloudagent-python) is used.
+Finally, the proof templates are stored in a Postgres database.
+
+### How can I deploy my own instance of the SSI Verifier?
+
+You can find more information about how to build and run your own instance [here](./docs/Build%20and%20Run.md).
+
+### Do I have to deploy my own instance or can I use the public instance?
+
+The instance hosted under [app.ssi-verifier.com](https://app.ssi-verifier.com) exists to be used. Feel free to use it in case you have any use cases you would like to test out.
+
+### Is the presentation data stored permanently?
+
+Due to the sensitivity of the data shared in presentations, the data will only be shared with your own session and immediately removed from the server. This also means that the presentation
+data will be inaccessible in case the browser session is exited before the presentation data was shared by the holder.
