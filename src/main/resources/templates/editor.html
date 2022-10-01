@@ -54,28 +54,38 @@
         </div>
 
         <div class="modal fade" id="infoModal" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLongTitle">Proof Templates</h4>
+                        <h4 class="modal-title">Proof Templates</h4>
                         <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h5>Syntax</h5>
+                        <h4>Data Privacy</h4>
+                        <p>
+                            To be able to share proof templates with other users all proof templates are
+                            publicly available and should not include any secrets.
+                        </p>
+
+                        <hr/>
+
+                        <h4>Syntax</h4>
                         <p>
                             Proof templates are defined following the AnonCreds Proof Request syntax. Only the top-level
                             attributes <code>requested_attributes</code>, <code>requested_predicates</code>,
                             and <code>non_revoked</code> can be customized. Other attributes will be ignored.
                         </p>
+                        <strong>$now Placeholder</strong>
                         <p>
                             To request a non-revocation check for the time that the proof request is sent out the
                             placeholder <code>$now</code> can be used in the proof template. Whenever a new proof
                             request is created based on the proof template all occurrences of <code>$now</code> will
                             be replaced with the current Unix epoch time in seconds.
                         </p>
+                        <strong>Nonce</strong>
                         <p>
                             A random <code>nonce</code> will be automatically generated with every new proof
                             request.
@@ -83,11 +93,66 @@
 
                         <hr/>
 
-                        <h5>Data Privacy</h5>
-                        <p>
-                            To be able to share proof templates with other users all proof templates are
-                            publicly available and should not include any secrets.
-                        </p>
+                        <h4>Samples</h4>
+                        <strong>Request Self-Attested Attributes</strong>
+                        <pre><code>{
+  <mark>"requested_attributes"</mark>: {
+    "attribute_0": {
+      "name": "email",
+      <mark>"restrictions": []</mark>
+    }
+  }
+}</code></pre>
+                        <strong>Request Credential Attributes</strong>
+                        <pre><code>{
+  <mark>"requested_attributes"</mark>: {
+    "attribute_0": {
+      "names": [
+        "email",
+        "name"
+      ],
+      <mark>"restrictions": [</mark>
+        <mark>{</mark>
+          <mark>"cred_def_id": "&lt;CREDENTIAL_DEF_ID&gt;"</mark>
+        <mark>}</mark>
+      <mark>]</mark>
+    }
+  }
+}</code></pre>
+                        <strong>Request Predicates</strong>
+                        <pre><code>{
+  <mark>"requested_predicates"</mark>: {
+    "predicate_0": {
+      "name": "Age",
+      <mark>"p_type": ">=",</mark>
+      <mark>"p_value": 18,</mark>
+      "restrictions": [
+        {
+          "cred_def_id": "&lt;CREDENTIAL_DEF_ID&gt;"
+        }
+      ]
+    }
+  }
+}</code></pre>
+                        <strong>Check for Non-Revocation</strong>
+                        <pre><code>{
+  "requested_attributes": {
+    "attribute_0": {
+      "names": [
+        "email",
+        "name"
+      ],
+      "restrictions": [
+        {
+          "cred_def_id": "&lt;CREDENTIAL_DEF_ID&gt;"
+        }
+      ]
+    }
+  },
+  <mark>"non_revoked": {</mark>
+    <mark>"to": $now</mark>
+  <mark>}</mark>
+}</code></pre>
                     </div>
                 </div>
             </div>
