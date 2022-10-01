@@ -66,9 +66,15 @@
                     <div class="modal-body">
                         <h5>Syntax</h5>
                         <p>
-                            Proof templates are defined following the AnonCreds Proof Request syntax. Only the
-                            attributes <code>requested_attributes</code> and <code>requested_predicates</code>
-                            can be customized. Other attributes will be ignored.
+                            Proof templates are defined following the AnonCreds Proof Request syntax. Only the top-level
+                            attributes <code>requested_attributes</code>, <code>requested_predicates</code>,
+                            and <code>non_revoked</code> can be customized. Other attributes will be ignored.
+                        </p>
+                        <p>
+                            To request a non-revocation check for the time that the proof request is sent out the
+                            placeholder <code>$now</code> can be used in the proof template. Whenever a new proof
+                            request is created based on the proof template all occurrences of <code>$now</code> will
+                            be replaced with the current Unix epoch time in seconds.
                         </p>
                         <p>
                             A random <code>nonce</code> will be automatically generated with every new proof

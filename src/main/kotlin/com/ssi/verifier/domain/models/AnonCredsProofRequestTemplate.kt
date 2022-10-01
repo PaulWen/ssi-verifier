@@ -20,6 +20,10 @@ class AnonCredsProofRequestTemplate(value: String) {
             output.add("requested_predicates", input.get("requested_predicates"))
         }
 
+        if (input.has("non_revoked")) {
+            output.add("non_revoked", input.get("non_revoked"))
+        }
+
         this.value = output.toString()
     }
 }

@@ -4,6 +4,7 @@ import com.ssi.verifier.domain.models.ProofTemplate
 import java.math.BigInteger
 import java.security.DrbgParameters
 import java.security.SecureRandom
+import java.time.Instant
 
 class AnonCredsProofRequest(proofTemplate: ProofTemplate) {
     val value: String
@@ -16,7 +17,17 @@ class AnonCredsProofRequest(proofTemplate: ProofTemplate) {
         proofRequestJson.addProperty("version", "1.0")
         proofRequestJson.addProperty("nonce", generateNonce())
 
-        this.value = proofRequestJson.toString()
+        val proofRequestWithTimePlaceholders = proofRequestJson.toString()
+        val proofRequest = replaceTimePlaceholdersForRevocationChecks(proofRequestWithTimePlaceholders)
+
+        this.value = proofRequest
+    }
+
+    private fun replaceTimePlaceholdersForRevocationChecks(proofRequest: String): String {
+        val nowInEpochMilliseconds = Instant.now().toEpochMilli().toString()
+        val nowInEpochSeconds = nowInEpochMilliseconds.substring(0, 10)
+
+        return proofRequest.replace(oldValue = "\$now", newValue = nowInEpochSeconds, ignoreCase = false)
     }
 
     private fun generateNonce(): String {

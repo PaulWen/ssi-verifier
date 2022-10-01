@@ -40,7 +40,8 @@ class EditorController(
                     "restrictions": []
                   }
                 },
-                "requested_predicates": {}
+                "requested_predicates": {},
+                "non_revoked": {}
             }
         """
 
