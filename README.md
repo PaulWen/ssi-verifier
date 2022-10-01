@@ -53,7 +53,13 @@ Feel free to try out the SSI Verifier here: https://app.ssi-verifier.com
 
 ![iPhone Screens](./images/screens_overview.png)
 
-As an SSI wallet we recommend using the [Lissi Wallet](https://lissi.id).
+The SSI Verifier is **connected to the IDunion Test Ledger**. When requesting attributes from credentials please ensure that you are referencing credential definitions or schemas that are published on
+the IDunion Test Ledger. To view all credential definitions and schemas published on the IDunion Test Ledger use one of the two ledger viewers:
+
+- [Indyscan](https://idunion.esatus.com/home/IDunion_Test)
+- [BcGov Viewer](https://idu.cloudcompass.ca/)
+
+As an SSI wallet we recommend using the **Lissi Wallet**: https://lissi.id
 
 ## 🗓 Roadmap
 
