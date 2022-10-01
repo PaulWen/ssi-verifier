@@ -17,11 +17,13 @@ class ProofExchangeInteractor(
         return ssiVerifier.newConnectionlessProofRequest(AnonCredsProofRequest(proofTemplate))
     }
 
-    fun verifiedProof(proofExchangeRecordDo: VerifiedProofExchange) {
-        if (!proofExchangeRecordDo.isValid) {
-            notificationService.invalidProofExchangeUpdate(proofExchangeRecordDo)
+    fun verifiedProof(verifiedProofExchange: VerifiedProofExchange) {
+        if (!verifiedProofExchange.isValid) {
+            notificationService.invalidProofExchangeUpdate(verifiedProofExchange)
         } else {
-            notificationService.validProofExchangeUpdate(proofExchangeRecordDo)
+            notificationService.validProofExchangeUpdate(verifiedProofExchange)
         }
+
+        ssiVerifier.removeProofRequestData(verifiedProofExchange.id)
     }
 }

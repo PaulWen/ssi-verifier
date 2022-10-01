@@ -8,7 +8,7 @@ import java.util.*
 
 
 class ConnectionlessProofRequest(
-    val exchangeId: String,
+    val exchangeId: ProofExchangeId,
     val url: String
 ) {
     val qrCodeDataUrlEncoded: String

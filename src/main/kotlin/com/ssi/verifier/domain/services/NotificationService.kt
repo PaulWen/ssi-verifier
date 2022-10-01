@@ -8,12 +8,12 @@ abstract class NotificationService(
 ) {
 
     fun validProofExchangeUpdate(verifiedProofExchange: VerifiedProofExchange) {
-        logger.notificationService("valid_proof_exchange_update", verifiedProofExchange.id)
+        logger.notificationService("valid_proof_exchange_update", verifiedProofExchange.id.value)
         handleValidProofExchangeUpdate(verifiedProofExchange)
     }
 
     fun invalidProofExchangeUpdate(verifiedProofExchange: VerifiedProofExchange) {
-        logger.notificationService("invalid_proof_exchange_update", verifiedProofExchange.id)
+        logger.notificationService("invalid_proof_exchange_update", verifiedProofExchange.id.value)
         handleInvalidProofExchangeUpdate(verifiedProofExchange)
 
     }

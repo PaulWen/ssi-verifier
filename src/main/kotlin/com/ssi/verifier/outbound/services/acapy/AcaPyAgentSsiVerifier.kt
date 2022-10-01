@@ -4,6 +4,7 @@ import AnonCredsProofRequest
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.ssi.verifier.domain.models.ConnectionlessProofRequest
+import com.ssi.verifier.domain.models.ProofExchangeId
 import com.ssi.verifier.domain.services.SsiVerifierService
 import org.hyperledger.aries.AriesClient
 import org.hyperledger.aries.api.present_proof.PresentProofRequest
@@ -19,8 +20,8 @@ class AcaPySsiVerifier(
     @Qualifier("AcaPy") private val acaPy: AriesClient,
 ) : SsiVerifierService {
 
-    override fun newConnectionlessProofRequest(proofReuqest: AnonCredsProofRequest): ConnectionlessProofRequest {
-        val proofRequest = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create().fromJson(proofReuqest.value, ProofRequest::class.java)
+    override fun newConnectionlessProofRequest(proofRequest: AnonCredsProofRequest): ConnectionlessProofRequest {
+        val proofRequest = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create().fromJson(proofRequest.value, ProofRequest::class.java)
 
         val presentationExchange: PresentationExchangeRecord = acaPy.presentProofCreateRequest(PresentProofRequest.builder().proofRequest(proofRequest).build()).get()
 
@@ -43,7 +44,11 @@ class AcaPySsiVerifier(
             Base64.getUrlEncoder().withoutPadding().encodeToString(didCommMessage.toString().toByteArray())
         val encodedUrl = "didcomm://aries_connection_invitation?d_m=$didCommMessageEncoded"
 
-        return ConnectionlessProofRequest(presentationExchange.presentationExchangeId, encodedUrl)
+        return ConnectionlessProofRequest(ProofExchangeId(presentationExchange.presentationExchangeId), encodedUrl)
+    }
+
+    override fun removeProofRequestData(proofExchangeId: ProofExchangeId) {
+        acaPy.presentProofRecordsRemove(proofExchangeId.value)
     }
 }
 

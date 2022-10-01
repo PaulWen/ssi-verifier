@@ -1,7 +1,8 @@
 package com.ssi.verifier.inbound.acapy
 
 import com.ssi.verifier.domain.models.Presentation
-import com.ssi.verifier.domain.models.RequestedProofRevealedAttrGroup
+import com.ssi.verifier.inbound.acapy.models.RequestedProofRevealedAttrAcaPy
+import com.ssi.verifier.inbound.acapy.models.RequestedProofRevealedAttrGroupAcaPy
 import org.hyperledger.aries.api.present_proof.PresentProofRequest.ProofRequest.ProofRequestedPredicates
 
 data class PresentationAcaPy(
@@ -27,25 +28,3 @@ data class PresentationAcaPy(
         )
     }
 }
-
-data class RequestedProofRevealedAttrAcaPy(
-    val raw: String,
-    val encoded: String,
-    val sub_proof_index: Int
-)
-
-data class RequestedProofRevealedAttrGroupAcaPy(
-    val sub_proof_index: Int,
-    val values: Map<String, AttributeAcaPy>
-) {
-    fun toDo() = RequestedProofRevealedAttrGroup(
-        values = values.mapValues { it.value.raw }
-    )
-}
-
-
-data class AttributeAcaPy(
-    val raw: String,
-    val encoded: String
-)
-
