@@ -27,6 +27,7 @@ class AppLogger {
         exception: Exception
     ) {
         logger.error("type=web_app_server_exception httpMethod=$httpMethod uri=$uri httpCode=${httpCode} message=\"${exception.cause?.message}\" trace=\"${exception.stackTrace.filter { it.className.startsWith("com.ssi.verifier") }.toString()}\"")
+        logger.debug(exception.stackTraceToString())
     }
 
     fun acaPyApi(httpMethod: String, uri: String, httpCode: Int, durationInMs: Double) {
