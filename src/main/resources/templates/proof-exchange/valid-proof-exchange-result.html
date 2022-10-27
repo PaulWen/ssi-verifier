@@ -68,7 +68,15 @@
                 <table class="mx-3 my-3">
                     <tr th:each="credentialAttribute : ${verifiedProofExchange.presentation.credentialAttributes}">
                         <td><strong th:text="${credentialAttribute.key}">key</strong></td>
-                        <td class="px-4" th:text="${credentialAttribute.value}">value</td>
+                        <td th:if="${!credentialAttribute.value.startsWith('data:image/png;base64,')}"
+                            class="px-4" th:text="${credentialAttribute.value}">
+                            value
+                        </td>
+                        <td th:if="${credentialAttribute.value.startsWith('data:image/png;base64,')}"
+                            th:insert="proof-exchange/image-attribute-fragment.html :: image(attributeName=${credentialAttribute.key}, base64ImageData=${credentialAttribute.value})"
+                            class="px-4">
+                            image
+                        </td>
                     </tr>
                 </table>
             </div>
