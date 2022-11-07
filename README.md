@@ -83,17 +83,18 @@ As an SSI wallet we recommend using the **Lissi Wallet**: https://lissi.id
 
 ### Web App
 
-| Feature                                           |  Status  | Description                                                                                                                                |
-|---------------------------------------------------|:--------:|--------------------------------------------------------------------------------------------------------------------------------------------|
-| JSON Editor for Proof Templates                   |    ✅     | Edit proof templates in JSON format                                                                                                        |
-| Visualize Proof Requests as QR Codes              |    ✅     | Show proof requests in the form of a QR code that holders can scan using their SSI wallet                                                  |
-| Show the Result of a Proof Request                |    ✅     | Show the validated presentation including all credential attributes as well as self-attested attributes                                    |
-| Share Proof Templates                             |    ✅     | Share proof templates with other users of the SSI Verifier so that they can generate the same kind of proof requests                       |
-| Define new Proof Templates based on existing ones |    ✅     | Editing an existing proof template will not overwrite it but create a new proof template to ensure that the old version continues to exist |
-| Form-based Editor for Proof Templates             |         | Edit proof templates using a guided editor                                                                                                 |
-| User Accounts                                     |         | Introduces user accounts to create private proof templates that can optionally be shared with other users                                   |
-| Groups                                            |         | Invite multiple users into a group to share proof templates between them                                                                   |
-| Group Admins                                      |         | Only group admins can invite users to a group and manage the proof templates of the group                                                  |
+| Feature                                           | Status | Description                                                                                                                                |
+|---------------------------------------------------|:------:|--------------------------------------------------------------------------------------------------------------------------------------------|
+| JSON Editor for Proof Templates                   |   ✅    | Edit proof templates in JSON format                                                                                                        |
+| Visualize Proof Requests as QR Codes              |   ✅    | Show proof requests in the form of a QR code that holders can scan using their SSI wallet                                                  |
+| Show the Result of a Proof Request                |   ✅    | Show the validated presentation including all credential attributes as well as self-attested attributes                                    |
+| Visualize Image-based Credential Attributes       |   ✅    | Render image-based credential attributes as images that can be enlarged by clicking on them                                                |
+| Share Proof Templates                             |   ✅    | Share proof templates with other users of the SSI Verifier so that they can generate the same kind of proof requests                       |
+| Define new Proof Templates based on existing ones |   ✅    | Editing an existing proof template will not overwrite it but create a new proof template to ensure that the old version continues to exist |
+| Form-based Editor for Proof Templates             |        | Edit proof templates using a guided editor                                                                                                 |
+| User Accounts                                     |        | Introduces user accounts to create private proof templates that can optionally be shared with other users                                  |
+| Groups                                            |        | Invite multiple users into a group to share proof templates between them                                                                   |
+| Group Admins                                      |        | Only group admins can invite users to a group and manage the proof templates of the group                                                  |
 
 ### Other Features
 
