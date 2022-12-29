@@ -49,17 +49,35 @@ To integrate the SSI Verifier into you existing systems a variety of API interfa
 
 ## 🚀 Try it!
 
-Feel free to try out the SSI Verifier here: https://app.ssi-verifier.com
+Feel free to start your own instance and try it out!
+(for more information see also [./docs/Build and Run.md](./docs/Build%20and%20Run.md))
 
-![iPhone Screens](./images/screens_overview.png)
+**1. Start Ngrok to expose the DIDcomm endpoint to the internet**
 
-The SSI Verifier is **connected to the IDunion Test Ledger**. When requesting attributes from credentials please ensure that you are referencing credential definitions or schemas that are published on
-the IDunion Test Ledger. To view all credential definitions and schemas published on the IDunion Test Ledger use one of the two ledger viewers:
+```
+cd ./docker-compose/ngrok
+./runNgrok.sh
+```
 
-- [Indyscan](https://idunion.esatus.com/home/IDunion_Test)
-- [BcGov Viewer](https://idu.cloudcompass.ca/)
+**2. Start the databases and AcaPy**
+
+```
+cd ./docker-compose
+./manage.sh start
+docker logs -f ssi-verifier-acapy
+```
+
+**3. Start the SSI Verifier**
+
+```
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+**4. Use the SSI Verifier**
 
 As an SSI wallet we recommend using the **Lissi Wallet**: https://lissi.id
+
+![iPhone Screens](./images/screens_overview.png)
 
 ## 🗓 Roadmap
 
@@ -128,10 +146,6 @@ Finally, the proof templates are stored in a Postgres database.
 ### How can I deploy my own instance of the SSI Verifier?
 
 You can find more information about how to build and run your own instance [here](./docs/Build%20and%20Run.md).
-
-### Do I have to deploy my own instance or can I use the public instance?
-
-The instance hosted under [app.ssi-verifier.com](https://app.ssi-verifier.com) exists to be used. Feel free to use it in case you have any use cases you would like to test out.
 
 ### Is the presentation data stored permanently?
 
